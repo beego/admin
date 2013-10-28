@@ -1,7 +1,7 @@
 package lib
 
 import (
-	m "admin/models"
+	m "admin/models/rbacmodels"
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
@@ -10,15 +10,17 @@ import (
 func init() {
 
 	// set default database
-	orm.RegisterDataBase("default", "mysql", "root:@/admin?charset=utf8")
+	orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
 
 }
 
-func Accesslist(id int) {
-	o1 := orm.NewOrm()
-	u := m.User{Id: id}
-	// n := m.Node{Id: 1, Title: "节点管理", Name: "Node", Level: 1, Sort: 1, Pid: 0}
-	// role := m.Role{Id: 1, Title: "管理员", User: u, Node: n}
+func Accesslist() {
+	var maps []orm.Params
+	o := orm.NewOrm()
+	num, err := o.Raw("Select * from user where id=?", 1).Values(&maps)
+	if err == nil && num > 0 {
+		fmt.Println(maps)
+	}
 }
 
 func Sync() {
@@ -30,7 +32,8 @@ func Sync() {
 
 	// 打印执行过程
 	verbose := true
-
+	var u m.User
+	fmt.Println(u.TableName())
 	// 遇到错误立即返回
 	err := orm.RunSyncdb(name, force, verbose)
 	if err != nil {
