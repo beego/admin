@@ -9,5 +9,5 @@ type MainController struct {
 }
 
 func (this *MainController) Get() {
-	this.TplNames = "public/login.tpl"
+	this.TplNames = "easyui/rbac/user.tpl"
 }

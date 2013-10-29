@@ -7,13 +7,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func init() {
-
-	// set default database
-	orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
-
-}
-
 func Accesslist() {
 	var maps []orm.Params
 	o := orm.NewOrm()

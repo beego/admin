@@ -1,7 +1,7 @@
 package rbac
 
 import (
-	//"admin/lib"
+	"admin/lib"
 	"github.com/astaxie/beego"
 )
 
@@ -10,5 +10,6 @@ type RbacController struct {
 }
 
 func (this *RbacController) Get() {
+	lib.Sync()
 	this.Ctx.WriteString("RbacController")
 }
