@@ -42,19 +42,33 @@ func (u *UserValid) Valid(v *validation.Validation) {
 	}
 }
 
-func CheckUser(u UserValid) {
+func CheckUser(u UserValid) (err interface{}) {
 	valid := validation.Validation{}
-	b, err := valid.Valid(u)
-	if err != nil {
-		// handle error
-	}
+	b, _ := valid.Valid(u)
 	if !b {
-		// validation does not pass
-		// blabla...
 		for _, err := range valid.Errors {
 			log.Println(err.Key, err.Message)
+			return err.Message
 		}
 	}
+	return nil
+}
+
+func AddUser(u UserValid) (int64, error) {
+	t := time.Now().Unix()
+	o := orm.NewOrm()
+	user := new(User)
+	user.Username = u.Username
+	user.Password = u.Password
+	user.Nickname = u.Nickname
+	user.Email = u.Email
+	user.Remark = u.Remark
+	user.Status = u.Status
+	user.Lastlogintime = time.Unix(t, 0)
+	user.Createtime = time.Unix(t, 0)
+
+	id, err := o.Insert(user)
+	return id, err
 }
 
 /************************************************************/
