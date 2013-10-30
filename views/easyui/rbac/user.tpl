@@ -60,7 +60,7 @@ $(function(){
             if(vac.isEmpty(changes)){
                 return;
             }
-            changes.id = data.id;
+            changes.Id = data.Id;
             vac.ajax(URL+'/UpdateUser', changes, 'POST', function(r){
                 if(!r.status){
                     vac.alert(r.info);

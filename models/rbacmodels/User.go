@@ -1,6 +1,7 @@
 package rbacmodels
 
 import (
+	"admin/lib"
 	"errors"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
@@ -11,15 +12,15 @@ import (
 //用户表
 type User struct {
 	Id            int
-	Username      string    `orm:"unique;size(32)" valid:"Required;MaxSize(20);MinSize(6)"`
-	Password      string    `orm:"size(32)" valid:"Required;Length(32)"`
-	Repassword    string    `orm:"-" valid:"Required"`
-	Nickname      string    `orm:"unique;size(32)" valid:"Required;MaxSize(20);MinSize(2)"`
-	Email         string    `orm:"size(32)" valid:"Email"`
-	Remark        string    `orm:"null;size(200)" valid:"MaxSize(200)"`
-	Status        int       `orm:"default(1)" valid:"Range(0,1)"`
-	Lastlogintime time.Time `orm:"null;type(datetime)"`
-	Createtime    time.Time `orm:"type(datetime);auto_now_add"`
+	Username      string    `orm:"unique;size(32)" form:"Username"  valid:"Required;MaxSize(20);MinSize(6)"`
+	Password      string    `orm:"size(32)" form:"Password" valid:"Required;MaxSize(20);MinSize(6)"`
+	Repassword    string    `orm:"-" form:"Repassword" valid:"Required"`
+	Nickname      string    `orm:"unique;size(32)" form:"Nickname" valid:"Required;MaxSize(20);MinSize(2)"`
+	Email         string    `orm:"size(32)" form:"Email" valid:"Email"`
+	Remark        string    `orm:"null;size(200)" form:"Remark" valid:"MaxSize(200)"`
+	Status        int       `orm:"default(1)" form:"Status" valid:"Range(0,1)"`
+	Lastlogintime time.Time `orm:"null;type(datetime)" form:"-"`
+	Createtime    time.Time `orm:"type(datetime);auto_now_add" `
 	Role          []*Role   `orm:"rel(m2m)"`
 }
 
@@ -27,31 +28,15 @@ func (u *User) TableName() string {
 	return "user"
 }
 
-// type UserValid struct {
-// 	Id         int
-// 	Username   string `valid:"Required;MaxSize(20);MinSize(6)"`
-// 	Password   string `valid:"Required;Length(32)"`
-// 	Repassword string `valid:"Required"`
-// 	Nickname   string `valid:"Required;MaxSize(20);MinSize(2)"`
-// 	Email      string `valid:"Email"`
-// 	Remark     string `valid:"MaxSize(200)"`
-// 	Status     int    `valid:"Range(0,1)"`
-// }
-
 func (u *User) Valid(v *validation.Validation) {
-	log.Println(u.Password)
-	log.Println(u.Repassword)
 	if u.Password != u.Repassword {
 		v.SetError("Repassword", "两次输入的密码不一样")
 	}
 }
 
-func checkUser(u User) (err error) {
+func checkUser(u *User) (err error) {
 	valid := validation.Validation{}
-	b, _ := valid.Valid(u)
-	// if u.Password != u.Repassword {
-	// 	return errors.New("两次输入的密码不一样")
-	// }
+	b, _ := valid.Valid(&u)
 	if !b {
 		for _, err := range valid.Errors {
 			log.Println(err.Key, err.Message)
@@ -61,14 +46,14 @@ func checkUser(u User) (err error) {
 	return nil
 }
 
-func AddUser(u User) (int64, error) {
+func AddUser(u *User) (int64, error) {
 	if err := checkUser(u); err != nil {
 		return 0, err
 	}
 	o := orm.NewOrm()
 	user := new(User)
 	user.Username = u.Username
-	user.Password = u.Password
+	user.Password = lib.Strtomd5(u.Password)
 	user.Nickname = u.Nickname
 	user.Email = u.Email
 	user.Remark = u.Remark
@@ -76,6 +61,32 @@ func AddUser(u User) (int64, error) {
 
 	id, err := o.Insert(user)
 	return id, err
+}
+
+func UpdateUser(u *User) (int64, error) {
+	if err := checkUser(u); err != nil {
+		return 0, err
+	}
+	o := orm.NewOrm()
+	//user := new(User)
+	var user orm.Params
+	if len(u.Username) > 0 {
+		user["Username"] = u.Username
+	}
+	if len(u.Nickname) > 0 {
+		user["Nickname"] = u.Nickname
+	}
+	if len(u.Email) > 0 {
+		user["Email"] = u.Email
+	}
+	if len(u.Remark) > 0 {
+		user["Remark"] = u.Remark
+	}
+	user["Status"] = u.Status
+	log.Fatalln(user)
+	num, err := o.QueryTable("user").Filter("ID", u.Id).Update(user)
+	//id, err := o.Update(user, "")
+	return num, err
 }
 
 /************************************************************/

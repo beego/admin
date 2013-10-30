@@ -12,8 +12,8 @@ func main() {
 	beego.Router("/", &controllers.MainController{})
 	//beego.Router("/rbac/sync", &rbac.RbacController{})
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
-	beego.Router("/rbac/user", &rbac.UserController{}, "*:Index")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")
+	beego.Router("/rbac/user", &rbac.UserController{}, "*:Index")
 
 	beego.Run()
 }
