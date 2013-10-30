@@ -18,7 +18,7 @@ type User struct {
 	Nickname      string    `orm:"unique;size(32)" form:"Nickname" valid:"Required;MaxSize(20);MinSize(2)"`
 	Email         string    `orm:"size(32)" form:"Email" valid:"Email"`
 	Remark        string    `orm:"null;size(200)" form:"Remark" valid:"MaxSize(200)"`
-	Status        int       `orm:"default(1)" form:"Status" valid:"Range(0,1)"`
+	Status        int       `orm:"default(2)" form:"Status" valid:"Range(1,2)"`
 	Lastlogintime time.Time `orm:"null;type(datetime)" form:"-"`
 	Createtime    time.Time `orm:"type(datetime);auto_now_add" `
 	Role          []*Role   `orm:"rel(m2m)"`
@@ -69,7 +69,7 @@ func UpdateUser(u *User) (int64, error) {
 	}
 	o := orm.NewOrm()
 	//user := new(User)
-	var user orm.Params
+	user := make(orm.Params)
 	if len(u.Username) > 0 {
 		user["Username"] = u.Username
 	}
@@ -82,10 +82,15 @@ func UpdateUser(u *User) (int64, error) {
 	if len(u.Remark) > 0 {
 		user["Remark"] = u.Remark
 	}
-	user["Status"] = u.Status
-	log.Fatalln(user)
-	num, err := o.QueryTable("user").Filter("ID", u.Id).Update(user)
-	//id, err := o.Update(user, "")
+	log.Println(u.Status)
+	if u.Status != 0 {
+		user["Status"] = u.Status
+	}
+	if len(user) == 0 {
+		return 0, errors.New("update field is empty")
+	}
+
+	num, err := o.QueryTable("user").Filter("Id", u.Id).Update(user)
 	return num, err
 }
 

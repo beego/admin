@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	//orm.Debug = true
 	orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
 	beego.Router("/", &controllers.MainController{})
 	//beego.Router("/rbac/sync", &rbac.RbacController{})

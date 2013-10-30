@@ -1,8 +1,8 @@
 {{template "easyui/public/header.tpl"}}
 <script type="text/javascript">
 var statuslist = [
-    {statusid:'0',name:'禁用'},
-    {statusid:'1',name:'启用'}
+    {statusid:'1',name:'禁用'},
+    {statusid:'2',name:'启用'}
 ];
 var URL="/rbac/user";
 $(function(){
@@ -274,8 +274,8 @@ function delrow(){
                     <td>状态：</td>
                     <td>
                         <select name="Status"  style="width:153px;" class="easyui-combobox " editable="false" required="true"  >
-                            <option value="1" >启用</option>
-                            <option value="0">禁用</option>
+                            <option value="2" >启用</option>
+                            <option value="1">禁用</option>
                         </select>
                     </td>
                 </tr>
