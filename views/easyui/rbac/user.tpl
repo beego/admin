@@ -28,13 +28,13 @@ $(function(){
             {field:'Remark',title:'备注',width:150,align:'center',editor:'text'},
             {field:'Lastlogintime',title:'上次登录时间',width:100,align:'center',
                 formatter:function(value,row,index){
-                    //if(value) return phpjs.date("Y-m-d H:i:s",value);
+                    if(value) return phpjs.date("Y-m-d H:i:s",phpjs.strtotime(value));
                     return value;
                 }
             },
             {field:'Createtime',title:'添加时间',width:100,align:'center',
                 formatter:function(value,row,index){
-                    //if(value) return phpjs.date("Y-m-d H:i:s",value);
+                    if(value) return phpjs.date("Y-m-d H:i:s",phpjs.strtotime(value));
                     return value;
                 }
             },
