@@ -1,10 +1,11 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript">
-    var grouplist=$.parseJSON({{.grouplist | Replacejson}});
+    var grouplist=$.parseJSON({{.grouplist | stringsToJson}});
     var products = [
-        {productid:'0',name:'禁用'},
-        {productid:'1',name:'启用'}
+        {productid:'1',name:'禁用'},
+        {productid:'2',name:'启用'}
     ];
+    var URL="/rbac/node";
     $(function(){
         $("#treegrid").treegrid({
             url:URL+"/index",
@@ -12,10 +13,10 @@
             treeField:"title",
             fitColumns:"true",
             columns:[[
-                {field:'title',title:'显示名',width:150,editor:'text'},
-                {field:'id',title:'ID',width:50},
-                {field:'name',title:'应用名',width:100,editor:'text'},
-                {field:'group_id',title:'分组',width:80,
+                {field:'Title',title:'显示名',width:150,editor:'text'},
+                {field:'Id',title:'ID',width:50},
+                {field:'Name',title:'应用名',width:100,editor:'text'},
+                {field:'Group_id',title:'分组',width:80,
                     formatter:function(value){
                         for(var i=0; i<grouplist.length; i++){
                             if (grouplist[i].id == value) return grouplist[i].title;
@@ -23,7 +24,7 @@
                         return value;
                     }
                 },
-                {field:'status',title:'状态',width:50,align:'center',
+                {field:'Status',title:'状态',width:50,align:'center',
                     formatter:function(value){
                         for(var i=0; i<products.length; i++){
                             if (products[i].productid == value) return products[i].name;
@@ -40,7 +41,7 @@
                         }
                     }
                 },
-                {field:'remark',title:'描述',width:150,editor:'text'}
+                {field:'Remark',title:'描述',width:150,editor:'text'}
             ]],
             onAfterEdit:function(c){
                 if(vac.isEmpty(c)){
@@ -79,8 +80,8 @@
 
         });
     $("#group").combobox({
-        "valueField":'id',
-        "textField":'title',
+        "valueField":'Id',
+        "textField":'Title',
         data:grouplist,
         value:1,
         onSelect:function(record){

@@ -211,7 +211,7 @@ function delrow(){
                 <tr>
                     <td>状态：</td>
                     <td>
-                        <select name="Status"  style="width:153px;" class="easyui-combobox " editable="false" required="true"  >
+                        <select name="Status"  style="width:153px;" class="easyui-combobox " data-options="value:2" editable="false" required="true"  >
                             <option value="2" >启用</option>
                             <option value="1">禁用</option>
                         </select>

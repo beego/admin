@@ -6,11 +6,22 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"strings"
+	"strconv"
 )
 
-func Replacejson(s string) string {
-	return strings.Replace(s, "[", "", -1)
+func stringsToJson(str string) string {
+	rs := []rune(str)
+	jsons := ""
+	for _, r := range rs {
+		rint := int(r)
+		if rint < 128 {
+			jsons += string(r)
+		} else {
+			jsons += "\\u" + strconv.FormatInt(int64(rint), 16) // json
+		}
+	}
+
+	return jsons
 }
 
 func main() {
@@ -37,7 +48,7 @@ func main() {
 	beego.Router("/rbac/group", &rbac.GroupController{}, "*:Index")
 
 	fmt.Println("Start ok")
-	beego.AddFuncMap("Replacejson", Replacejson)
+	beego.AddFuncMap("stringsToJson", stringsToJson)
 	beego.Run()
 
 }
