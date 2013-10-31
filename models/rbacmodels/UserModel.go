@@ -47,6 +47,28 @@ func checkUser(u *User) (err error) {
 	return nil
 }
 
+func init() {
+	orm.RegisterModel(new(User))
+}
+
+/************************************************************/
+
+//get user list
+func Getuserlist(page int64, page_size int64, sort string) (users []orm.Params, count int64) {
+	o := orm.NewOrm()
+	user := new(User)
+	qs := o.QueryTable(user)
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	qs.Limit(page_size, offset).OrderBy(sort).Values(&users)
+	count, _ = qs.Count()
+	return users, count
+}
+
 //添加用户
 func AddUser(u *User) (int64, error) {
 	if err := checkUser(u); err != nil {
@@ -102,25 +124,4 @@ func DelUserById(Id int64) (int64, error) {
 	o := orm.NewOrm()
 	status, err := o.Delete(&User{Id: Id})
 	return status, err
-}
-
-/************************************************************/
-func init() {
-	orm.RegisterModel(new(User))
-}
-
-//get user list
-func Getuserlist(page int64, page_size int64, sort string) (users []orm.Params, count int64) {
-	o := orm.NewOrm()
-	user := new(User)
-	qs := o.QueryTable(user)
-	var offset int64
-	if page <= 1 {
-		offset = 0
-	} else {
-		offset = (page - 1) * page_size
-	}
-	qs.Limit(page_size, offset).OrderBy(sort).Values(&users)
-	count, _ = qs.Count()
-	return users, count
 }
