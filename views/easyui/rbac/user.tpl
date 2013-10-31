@@ -21,8 +21,8 @@ $(function(){
         pageSize:20,
         pageList:[10,20,30,50,100],
         columns:[[
-            {field:'Id',title:'ID',width:50},
-            {field:'Username',title:'用户名',width:100},
+            {field:'Id',title:'ID',width:50,sortable:true},
+            {field:'Username',title:'用户名',width:100,sortable:true},
             {field:'Nickname',title:'昵称',width:100,align:'center',editor:'text'},
             {field:'Email',title:'Email',width:100,align:'center',editor:'text'},
             {field:'Remark',title:'备注',width:150,align:'center',editor:'text'},
@@ -134,8 +134,7 @@ $(function(){
             handler:function(){
                 var selectedRow = $("#datagrid").datagrid('getSelected');
                 var password = $('#password').val();
-                var repassword = $('#repassword').val();
-                vac.ajax(URL+'/UpdateUser/isajax/1?id='+selectedRow.id, {password:password,repassword:repassword}, 'post', function(r){
+                vac.ajax(URL+'/UpdateUser', {Id:selectedRow.Id,Password:password}, 'post', function(r){
                     if(r.status){
                         $("#dialog2").dialog("close");
                     }else{
@@ -208,7 +207,7 @@ function delrow(){
                 vac.alert("请选择要删除的行");
                 return;
             }
-            vac.ajax(URL+'/DelUser', {id:row.id}, 'POST', function(r){
+            vac.ajax(URL+'/DelUser', {Id:row.Id}, 'POST', function(r){
                 if(r.status){
                     $("#datagrid").datagrid('reload');
                 }else{
@@ -292,11 +291,7 @@ function delrow(){
         <table>
             <tr>
                 <td>密码：</td>
-                <td><input name="password" type="password" id="password" class="easyui-validatebox" required="true"   validType="password[4,20]" /></td>
-            </tr>
-            <tr>
-                <td>密码：</td>
-                <td><input name="repassword" type="password" id="repassword" class="easyui-validatebox" required="true"   validType="password[4,20]" /></td>
+                <td><input name="Password" type="password" id="password" class="easyui-validatebox" required="true"   validType="password[4,20]" /></td>
             </tr>
         </table>
     </div>

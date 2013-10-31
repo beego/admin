@@ -11,7 +11,7 @@ import (
 
 //用户表
 type User struct {
-	Id            int
+	Id            int64
 	Username      string    `orm:"unique;size(32)" form:"Username"  valid:"Required;MaxSize(20);MinSize(6)"`
 	Password      string    `orm:"size(32)" form:"Password" valid:"Required;MaxSize(20);MinSize(6)"`
 	Repassword    string    `orm:"-" form:"Repassword" valid:"Required"`
@@ -84,6 +84,9 @@ func UpdateUser(u *User) (int64, error) {
 	if len(u.Remark) > 0 {
 		user["Remark"] = u.Remark
 	}
+	if len(u.Password) > 0 {
+		user["Password"] = lib.Strtomd5(u.Password)
+	}
 	if u.Status != 0 {
 		user["Status"] = u.Status
 	}
@@ -95,18 +98,29 @@ func UpdateUser(u *User) (int64, error) {
 	return num, err
 }
 
+func DelUserById(Id int64) (int64, error) {
+	o := orm.NewOrm()
+	status, err := o.Delete(&User{Id: Id})
+	return status, err
+}
+
 /************************************************************/
 func init() {
 	orm.RegisterModel(new(User))
 }
 
 //get user list
-func Getuserlist(where string, page int, page_size int, sort string) (users []orm.Params, count int64) {
+func Getuserlist(page int64, page_size int64, sort string) (users []orm.Params, count int64) {
 	o := orm.NewOrm()
 	user := new(User)
 	qs := o.QueryTable(user)
-	qs.Limit(0, 10)
-	qs.Values(&users)
+	var offset int64
+	if page <= 1 {
+		offset = 0
+	} else {
+		offset = (page - 1) * page_size
+	}
+	qs.Limit(page_size, offset).OrderBy(sort).Values(&users)
 	count, _ = qs.Count()
 	return users, count
 }

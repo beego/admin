@@ -18,9 +18,12 @@ func main() {
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")
+	beego.Router("/rbac/user/DelUser", &rbac.UserController{}, "*:DelUser")
 	beego.Router("/rbac/user", &rbac.UserController{}, "*:Index")
 
+	fmt.Println("Start ok")
 	beego.Run()
+
 }
 
 func CreateDB() {

@@ -16,7 +16,18 @@ func (this *UserController) Rsp(status bool, str string) {
 
 func (this *UserController) Index() {
 	if this.IsAjax() {
-		users, count := m.Getuserlist("1", 1, 10, "sort")
+		page, _ := this.GetInt("page")
+		page_size, _ := this.GetInt("rows")
+		sort := this.GetString("sort")
+		order := this.GetString("order")
+		if len(order) > 0 {
+			if order == "desc" {
+				sort = "-" + sort
+			}
+		} else {
+			sort = "Id"
+		}
+		users, count := m.Getuserlist(page, page_size, sort)
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
 		this.ServeJson()
 		return
@@ -60,4 +71,16 @@ func (this *UserController) UpdateUser() {
 		return
 	}
 
+}
+
+func (this *UserController) DelUser() {
+	Id, _ := this.GetInt("Id")
+	status, err := m.DelUserById(Id)
+	if err == nil && status > 0 {
+		this.Rsp(true, "Success")
+		return
+	} else {
+		this.Rsp(false, err.Error())
+		return
+	}
 }
