@@ -6,11 +6,16 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"strings"
 )
+
+func Replacejson(s string) string {
+	return strings.Replace(s, "[", "", -1)
+}
 
 func main() {
 
-	//orm.Debug = true
+	orm.Debug = true
 	fmt.Println("Starting....")
 	orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
 	//CreateDB()
@@ -32,6 +37,7 @@ func main() {
 	beego.Router("/rbac/group", &rbac.GroupController{}, "*:Index")
 
 	fmt.Println("Start ok")
+	beego.AddFuncMap("Replacejson", Replacejson)
 	beego.Run()
 
 }

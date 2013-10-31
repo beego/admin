@@ -2,6 +2,8 @@ package rbac
 
 import (
 	m "admin/models/rbacmodels"
+	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -32,6 +34,10 @@ func (this *NodeController) Index() {
 		this.ServeJson()
 		return
 	} else {
+		grouplist := m.GroupList()
+		b, _ := json.Marshal(grouplist)
+		fmt.Println(string(b))
+		this.Data["grouplist"] = string(b)
 		this.TplNames = "easyui/rbac/node.tpl"
 	}
 

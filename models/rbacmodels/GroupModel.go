@@ -10,10 +10,10 @@ import (
 //分组表
 type Group struct {
 	Id     int64
-	Name   string  `orm:"unique;size(100)" form:"Name"  valid:"Required"`
-	Title  string  `orm:"unique;size(100)" form:"Title"  valid:"Required"`
+	Name   string  `orm:"size(100)" form:"Name"  valid:"Required"`
+	Title  string  `orm:"size(100)" form:"Title"  valid:"Required"`
 	Status int     `orm:"default(2)" form:"Status" valid:"Range(1,2)"`
-	Sort   int     `orm:"default(2)" form:"Status" valid:"Numeric"`
+	Sort   int     `orm:"default(2)" form:"Sort" valid:"Numeric"`
 	Nodes  []*Node `orm:"reverse(many)"`
 }
 
@@ -97,4 +97,12 @@ func DelGroupById(Id int64) (int64, error) {
 	o := orm.NewOrm()
 	status, err := o.Delete(&Group{Id: Id})
 	return status, err
+}
+
+func GroupList() (groups []orm.Params) {
+	o := orm.NewOrm()
+	group := new(Group)
+	qs := o.QueryTable(group)
+	qs.Values(&groups, "id", "title")
+	return groups
 }

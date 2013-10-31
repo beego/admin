@@ -1,6 +1,6 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript">
-    var grouplist={}//{$grouplist};
+    var grouplist=$.parseJSON({{.grouplist | Replacejson}});
     var products = [
         {productid:'0',name:'禁用'},
         {productid:'1',name:'启用'}
