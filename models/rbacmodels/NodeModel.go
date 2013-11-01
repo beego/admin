@@ -1,6 +1,11 @@
 package rbacmodels
 
-import "github.com/astaxie/beego/orm"
+import (
+	"errors"
+	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/validation"
+	"log"
+)
 
 //节点表
 type Node struct {
@@ -18,6 +23,19 @@ type Node struct {
 
 func (n *Node) TableName() string {
 	return "node"
+}
+
+//验证用户信息
+func checkNode(u *Node) (err error) {
+	valid := validation.Validation{}
+	b, _ := valid.Valid(&u)
+	if !b {
+		for _, err := range valid.Errors {
+			log.Println(err.Key, err.Message)
+			return errors.New(err.Message)
+		}
+	}
+	return nil
 }
 
 func init() {
@@ -38,4 +56,24 @@ func GetNodelist(page int64, page_size int64, sort string) (nodes []orm.Params, 
 	qs.Limit(page_size, offset).OrderBy(sort).Values(&nodes)
 	count, _ = qs.Count()
 	return nodes, count
+}
+
+//添加用户
+func AddNode(n *Node) (int64, error) {
+	if err := checkNode(n); err != nil {
+		return 0, err
+	}
+	o := orm.NewOrm()
+	node := new(Node)
+	node.Title = n.Title
+	node.Name = n.Name
+	node.Level = n.Level
+	node.Sort = n.Sort
+	node.Pid = n.Pid
+	node.Remark = n.Remark
+	node.Status = n.Status
+	node.Group = n.Group
+
+	id, err := o.Insert(node)
+	return id, err
 }

@@ -8,9 +8,9 @@
     var URL="/rbac/node";
     $(function(){
         $("#treegrid").treegrid({
-            url:URL+"/index",
-            idField:"id",
-            treeField:"title",
+            url:URL,
+            idField:"Id",
+            treeField:"Title",
             fitColumns:"true",
             columns:[[
                 {field:'Title',title:'显示名',width:150,editor:'text'},
@@ -19,7 +19,7 @@
                 {field:'Group_id',title:'分组',width:80,
                     formatter:function(value){
                         for(var i=0; i<grouplist.length; i++){
-                            if (grouplist[i].id == value) return grouplist[i].title;
+                            if (grouplist[i].Id == value) return grouplist[i].Title;
                         }
                         return value;
                     }
@@ -52,7 +52,7 @@
                         vac.alert(r.info);
                     }else{
                         var group_id = $("#group").combobox("getValue");
-                        vac.ajax(URL+"/index",{group_id:group_id},"POST",function(data){
+                        vac.ajax(URL,{group_id:group_id},"POST",function(data){
                                     $("#treegrid").treegrid("loadData",data)
                                 }
                         );
@@ -85,7 +85,7 @@
         data:grouplist,
         value:1,
         onSelect:function(record){
-            vac.ajax(URL+"/index",{group_id:record.id},"POST",function(data){
+            vac.ajax(URL,{group_id:record.Id},"POST",function(data){
                         $("#treegrid").treegrid("loadData",data)
                     }
             )
@@ -97,18 +97,18 @@
         var Row = $("#treegrid").treegrid("getSelected");
         var _group = $("#group").combobox("getValue");
         var data = [];
-        data[0] = {id:0,title:'',name:'',remark:'',status:'1',pid:0,group_id:_group};
+        data[0] = {Id:0,Title:'',Name:'',Remark:'',Status:'1',Pid:0,Group_id:_group};
         if(!vac.isEmpty(Row)){
-            data[0].pid =Row.id;
-            $("#treegrid").treegrid("expand",Row.id);//展开节点
-            if($("#treegrid").treegrid("getLevel",Row.id) >2){
+            data[0].Pid =Row.Id;
+            $("#treegrid").treegrid("expand",Row.Id);//展开节点
+            if($("#treegrid").treegrid("getLevel",Row.Id) >2){
                 vac.alert("不允许添加");
                 return false;
             }
         }
         //如果没有数据，则从0行开始新增
         $("#treegrid").treegrid("append",{
-            parent: (Row?Row.id:null),
+            parent: (Row?Row.Id:null),
             data:data
         });
         $("#treegrid").treegrid("select",0);//选中
@@ -121,7 +121,7 @@
             vac.alert("请选择要编辑的行");
             return;
         }
-        $("#treegrid").treegrid("beginEdit",row.id);
+        $("#treegrid").treegrid("beginEdit",row.Id);
     }
     //保存
     function saverow(){
@@ -130,7 +130,7 @@
             vac.alert("请选择要保存的行");
             return;
         }
-        $("#treegrid").treegrid("endEdit",row.id);
+        $("#treegrid").treegrid("endEdit",row.Id);
     }
     //取消
     function cancelrow(){
@@ -139,7 +139,7 @@
             vac.alert("请选择要取消的行");
             return;
         }
-        $("#treegrid").treegrid("cancelEdit",row.id);
+        $("#treegrid").treegrid("cancelEdit",row.Id);
     }
     //删除
     function delrow(){
@@ -150,7 +150,7 @@
                     vac.alert("请选择要删除的行");
                     return;
                 }
-                vac.ajax(URL+'/DelNode', {id:row.id}, 'POST', function(r){
+                vac.ajax(URL+'/DelNode', {Id:row.Id}, 'POST', function(r){
                     if(!r.status){
                         vac.alert(r.info);
                     }else{

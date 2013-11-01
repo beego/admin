@@ -37,9 +37,9 @@ func main() {
 	beego.Router("/rbac/user/DelUser", &rbac.UserController{}, "*:DelUser")
 	beego.Router("/rbac/user", &rbac.UserController{}, "*:Index")
 
-	// beego.Router("/rbac/Node/AddNode", &rbac.UserController{}, "*:AddUser")
-	// beego.Router("/rbac/Node/UpdateNode", &rbac.UserController{}, "*:UpdateUser")
-	// beego.Router("/rbac/Node/DelNode", &rbac.UserController{}, "*:DelUser")
+	beego.Router("/rbac/node/AddAndEdit", &rbac.UserController{}, "*:AddAndEdit")
+	// beego.Router("/rbac/Node/UpdateNode", &rbac.UserController{}, "*:UpdateNode")
+	// beego.Router("/rbac/Node/DelNode", &rbac.UserController{}, "*:DelNode")
 	beego.Router("/rbac/node", &rbac.NodeController{}, "*:Index")
 
 	beego.Router("/rbac/group/AddGroup", &rbac.GroupController{}, "*:AddGroup")

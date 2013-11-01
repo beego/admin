@@ -40,3 +40,25 @@ func (this *NodeController) Index() {
 	}
 
 }
+func (this *UserController) AddAndEdit() {
+	u := m.Node{}
+	if err := this.ParseForm(&u); err != nil {
+		//handle error
+		this.Rsp(false, err.Error())
+		return
+	}
+	group_id, _ := this.GetInt("Group_id")
+	group := new(m.Group)
+	group.Id = group_id
+	u.Group = group
+
+	id, err := m.AddNode(&u)
+	if err == nil && id > 0 {
+		this.Rsp(true, "Success")
+		return
+	} else {
+		this.Rsp(false, err.Error())
+		return
+	}
+
+}
