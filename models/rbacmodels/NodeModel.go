@@ -53,7 +53,7 @@ func GetNodelist(page int64, page_size int64, sort string) (nodes []orm.Params, 
 	} else {
 		offset = (page - 1) * page_size
 	}
-	qs.Limit(page_size, offset).OrderBy(sort).Values(&nodes)
+	qs.Limit(page_size, offset).OrderBy(sort).Values(&nodes, "Id", "Title", "Name", "Status", "Pid", "Remark", "Group__id")
 	count, _ = qs.Count()
 	return nodes, count
 }
