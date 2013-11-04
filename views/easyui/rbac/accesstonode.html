@@ -1,0 +1,121 @@
+{// 加载头部公共文件 }
+<include file="../../Pub/Public/header_easyui" />
+<script type="text/javascript">
+    var roleid = {$roleid};
+    var grouplist={$grouplist};
+$(function(){
+    //授权列表
+    $("#combobox1").combobox({
+        url:URL+'/index?from=only',
+        valueField:'id',
+        textField:'name',
+        value:roleid,
+        onSelect:function(record){
+            var group_id = $("#group").combobox("getValue");
+            vac.ajax(URL+"/AccessToNode",{id:record.id,group_id:group_id},"POST",function(data){
+                        $("#treegrid").treegrid("loadData",data)
+                    }
+            )
+        }
+    });
+    //加载树
+    $("#treegrid").treegrid({
+        'url':URL+'/AccessToNode?group_id=1&id='+roleid,
+        'idField':'id',
+        'treeField':'title',
+        'fitColumns':true,
+        'singleSelect':false,
+        columns:[[
+            {field:'title',title:'显示名',width:150},
+            {field:'id',title:'ID',hidden:true},
+            {field:'name',title:'应用名',width:150},
+            {field:'opt',title:'勾选子节点',width:60,
+                formatter:function(value,row,index){
+                    //var level = $("#treegrid").treegrid("getLevel",row.id);
+                    if(row.level <3){
+                        return "<a href='#'  onclick='checkalllevel("+row.id+")'>选中子节点</a>";
+                    }
+
+                }
+            }
+        ]],
+        onLoadSuccess:function(node,data){
+            //默认选中已存在的对应关系
+            for(var i=0;i<data.rows.length;i++){
+                if(data.rows[i].checked == 1){
+                    $(this).treegrid('select',data.rows[i].id);
+                }
+            }
+        },
+        onSelect:function(row){
+            $(this).treegrid('expandAll',row.id);
+            var rs = $(this).treegrid("find",row._parentId);
+            //选中父节点
+            if(row._parentId && rs.isxuanzhong == undefined){
+                rs.isxuanzhong = 1;
+                $(this).treegrid('select',row._parentId);
+            }
+        },
+        onUnselect:function(row){
+            //选中level=2的节点
+            if(row.children != undefined){
+                for(var i=0;i<row.children.length;i++){
+                    $(this).treegrid('unselect',row.children[i].id);
+                    //选中level=3的节点
+                    if(row.children[i].children != undefined){
+                        for(var j=0;j<row.children[i].children.length;j++){
+                            $(this).treegrid('unselect',row.children[i].children[j].id);
+                        }
+                    }
+                }
+            }
+        }
+    });
+    $("#group").combobox({
+        "valueField":'id',
+        "textField":'title',
+        data:grouplist,
+        value:1,
+        onSelect:function(record){
+            var roleid = $("#combobox1").combobox("getValue");
+            vac.ajax(URL+"/AccessToNode",{group_id:record.id,id:roleid},"POST",function(data){
+                        $("#treegrid").treegrid("loadData",data)
+                    }
+            )
+        }
+    });
+});
+    //保存授权
+    function saveaccess(){
+        $.messager.progress();
+        var tdata = $("#treegrid").treegrid('getSelections');
+        var data=new Array(tdata.length);
+        for(var i=0;i<tdata.length;i++){
+            data[i] = {node_id:tdata[i].id,pid:tdata[i].pid,level:tdata[i].level,group_id:tdata[i].group_id};
+        }
+        var roleid = $("#combobox1").combobox("getValue");
+        var group_id = $("#group").combobox("getValue");
+        vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,data:data}, 'POST', function(r){
+            $.messager.alert('提示',r.info,'info');
+            $.messager.progress('close');
+        })
+    }
+    function checkalllevel(id){
+        var treegrid = $("#treegrid");
+        var Childrens =treegrid.treegrid("getChildren",id);
+        for(var i=0;i<Childrens.length;i++){
+            treegrid.treegrid("select",Childrens[i].id);
+        }
+    }
+</script>
+<body>
+<table id="treegrid" toolbar="#tbr"></table>
+<div id="tbr" style="padding:5px;height:auto">
+    <div style="margin-bottom:5px">
+        分组：<input id="group" name="name" >
+        当前组：<input id="combobox1" name="name" >
+        <a href="#"  class="easyui-linkbutton" iconCls="icon-save" title="保存" plain="true" onclick="saveaccess()">保存</a>
+    </div>
+</div>
+</body>
+</html>
