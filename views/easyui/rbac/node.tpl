@@ -43,6 +43,11 @@
                 },
                 {field:'Remark',title:'描述',width:150,editor:'text'}
             ]],
+            onLoadSuccess:function(row,data){
+                console.log(row)
+                console.log(data)
+                //$(this).treegrid("loadData",data);
+            },
             onAfterEdit:function(c){
                 if(vac.isEmpty(c)){
                     return;

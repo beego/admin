@@ -1,38 +1,39 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript">
 var statuslist = [
-    {statusid:'0',name:'禁用'},
-    {statusid:'1',name:'启用'}
+    {statusid:'1',name:'禁用'},
+    {statusid:'2',name:'启用'}
 ];
+var URL="/rbac/role";
 $(function(){
     //角色列表
     $("#datagrid").datagrid({
         title:'角色管理',
-        url:URL+'/index',
+        url:URL,
         method:'POST',
         pagination:true,
         fitColumns:true,
         striped:true,
         rownumbers:true,
         singleSelect:true,
-        idField:'id',
+        idField:'Id',
         columns:[[
-            {field:'id',title:'ID',width:50,align:'center'},
-            {field:'name',title:'组名',width:150,align:'center',editor:'text'},
-            {field:'remark',title:'描述',width:250,align:'center',editor:'text'},
-            {field:'create_time',title:'添加时间',width:150,align:'center',
-                formatter:function(value,row,index){
-                    if(value) return phpjs.date("Y-m-d H:i:s",value);
-                    return value;
-                }
-            },
-            {field:'update_time',title:'更新时间',width:150,align:'center',
-                formatter:function(value,row,index){
-                    if(value) return phpjs.date("Y-m-d H:i:s",value);
-                    return value;
-                }
-            },
-            {field:'status',title:'状态',width:100,align:'center',
+            {field:'Id',title:'ID',width:50,align:'center'},
+            {field:'Name',title:'组名',width:150,align:'center',editor:'text'},
+            {field:'Remark',title:'描述',width:250,align:'center',editor:'text'},
+            // {field:'create_time',title:'添加时间',width:150,align:'center',
+            //     formatter:function(value,row,index){
+            //         if(value) return phpjs.date("Y-m-d H:i:s",value);
+            //         return value;
+            //     }
+            // },
+            // {field:'update_time',title:'更新时间',width:150,align:'center',
+            //     formatter:function(value,row,index){
+            //         if(value) return phpjs.date("Y-m-d H:i:s",value);
+            //         return value;
+            //     }
+            // },
+            {field:'Status',title:'状态',width:100,align:'center',
                 formatter:function(value){
                     for(var i=0; i<statuslist.length; i++){
                         if (statuslist[i].statusid == value) return statuslist[i].name;
@@ -61,10 +62,10 @@ $(function(){
             if(vac.isEmpty(changes)){
                 return;
             }
-            if(data.id == undefined){
-                changes.id = 0;
+            if(data.Id == undefined){
+                changes.Id = 0;
             }else{
-                changes.id = data.id;
+                changes.Id = data.Id;
             }
             vac.ajax(URL+'/AddAndEdit', changes, 'POST', function(r){
                 if(!r.status){
@@ -97,16 +98,14 @@ $(function(){
 //新增行
 function addrow(){
     var getRows = $("#datagrid").datagrid("getRows");
+
     //如果没有数据，则从0行开始新增
     if(vac.isEmpty(getRows)){
         var lenght = 0;
-        var sort = 0;
     }else{
         var lenght = getRows.length;
-        var row = getRows[lenght-1];
-        var sort = new Number(row.sort)+1;
     }
-    $("#datagrid").datagrid("appendRow",{});//插入
+    $("#datagrid").datagrid("appendRow",{Status:2});//插入
     $("#datagrid").datagrid("selectRow",lenght);//选中
     $("#datagrid").datagrid("beginEdit",lenght);//编辑输入
 }
@@ -146,7 +145,7 @@ function delrow(){
                 vac.alert("请选择要删除的行");
                 return;
             }
-            vac.ajax('/Role/DelRole', {id:row.id}, 'POST', function(r){
+            vac.ajax(URL+'/DelRole', {Id:row.Id}, 'POST', function(r){
                 if(r.status){
                     $("#datagrid").datagrid('reload');
                 }else{

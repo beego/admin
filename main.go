@@ -37,15 +37,18 @@ func main() {
 	beego.Router("/rbac/user/DelUser", &rbac.UserController{}, "*:DelUser")
 	beego.Router("/rbac/user", &rbac.UserController{}, "*:Index")
 
-	beego.Router("/rbac/node/AddAndEdit", &rbac.UserController{}, "*:AddAndEdit")
-	// beego.Router("/rbac/Node/UpdateNode", &rbac.UserController{}, "*:UpdateNode")
-	// beego.Router("/rbac/Node/DelNode", &rbac.UserController{}, "*:DelNode")
+	beego.Router("/rbac/node/AddAndEdit", &rbac.NodeController{}, "*:AddAndEdit")
+	beego.Router("/rbac/node/DelNode", &rbac.NodeController{}, "*:DelNode")
 	beego.Router("/rbac/node", &rbac.NodeController{}, "*:Index")
 
 	beego.Router("/rbac/group/AddGroup", &rbac.GroupController{}, "*:AddGroup")
 	beego.Router("/rbac/group/UpdateGroup", &rbac.GroupController{}, "*:UpdateGroup")
 	beego.Router("/rbac/group/DelGroup", &rbac.GroupController{}, "*:DelGroup")
 	beego.Router("/rbac/group", &rbac.GroupController{}, "*:Index")
+
+	beego.Router("/rbac/role/AddAndEdit", &rbac.RoleController{}, "*:AddAndEdit")
+	beego.Router("/rbac/role/DelRole", &rbac.RoleController{}, "*:DelRole")
+	beego.Router("/rbac/role", &rbac.RoleController{}, "*:Index")
 
 	fmt.Println("Start ok")
 	beego.AddFuncMap("stringsToJson", stringsToJson)

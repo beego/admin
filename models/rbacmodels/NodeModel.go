@@ -13,7 +13,6 @@ type Node struct {
 	Title  string  `orm:"size(100)" form:"Title"  valid:"Required"`
 	Name   string  `orm:"size(100)" form:"Name"  valid:"Required"`
 	Level  int     `orm:"default(1)" form:"Level"  valid:"Required"`
-	Sort   int     `orm:"default(1)" form:"Sort"  valid:"Required"`
 	Pid    int64   `form:"Pid"  valid:"Required"`
 	Remark string  `orm:"null;size(200)" form:"Remark" valid:"MaxSize(200)"`
 	Status int     `orm:"default(2)" form:"Status" valid:"Range(1,2)"`
@@ -68,7 +67,6 @@ func AddNode(n *Node) (int64, error) {
 	node.Title = n.Title
 	node.Name = n.Name
 	node.Level = n.Level
-	node.Sort = n.Sort
 	node.Pid = n.Pid
 	node.Remark = n.Remark
 	node.Status = n.Status
@@ -76,4 +74,37 @@ func AddNode(n *Node) (int64, error) {
 
 	id, err := o.Insert(node)
 	return id, err
+}
+
+//更新用户
+func UpdateNode(n *Node) (int64, error) {
+	if err := checkNode(n); err != nil {
+		return 0, err
+	}
+	o := orm.NewOrm()
+	node := make(orm.Params)
+	if len(n.Title) > 0 {
+		node["Title"] = n.Title
+	}
+	if len(n.Name) > 0 {
+		node["Name"] = n.Name
+	}
+	if len(n.Remark) > 0 {
+		node["Remark"] = n.Remark
+	}
+	if n.Status != 0 {
+		node["Status"] = n.Status
+	}
+	if len(node) == 0 {
+		return 0, errors.New("update field is empty")
+	}
+
+	num, err := o.QueryTable("node").Filter("Id", n.Id).Update(node)
+	return num, err
+}
+
+func DelNodeById(Id int64) (int64, error) {
+	o := orm.NewOrm()
+	status, err := o.Delete(&Node{Id: Id})
+	return status, err
 }

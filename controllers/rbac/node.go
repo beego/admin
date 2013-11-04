@@ -3,8 +3,10 @@ package rbac
 import (
 	m "admin/models/rbacmodels"
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	//"strconv"
 )
 
 type NodeController struct {
@@ -29,20 +31,18 @@ func (this *NodeController) Index() {
 		} else {
 			sort = "Id"
 		}
-		list := make(map[string]interface{})
-		cc := make(map[string]interface{})
 		nodes, count := m.GetNodelist(page, page_size, sort)
-		for _, v := range nodes {
-			if v["Pid"] != 0 {
-				cc["children"] = v
-				list[string(v["Pid"].(int64))] = cc
-				fmt.Println(v["Pid"])
+		for i := 0; i < len(nodes); i++ {
+			if nodes[i]["Pid"] != 0 {
+				nodes[i]["_parentId"] = nodes[i]["Pid"]
 			} else {
-				list[string(v["Id"].(int64))] = v
+				nodes[i]["state"] = "closed"
 			}
-			fmt.Println(list)
 		}
-		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &list}
+		if len(nodes) < 1 {
+			nodes = []orm.Params{}
+		}
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &nodes}
 		this.ServeJson()
 		return
 	} else {
@@ -53,19 +53,25 @@ func (this *NodeController) Index() {
 	}
 
 }
-func (this *UserController) AddAndEdit() {
-	u := m.Node{}
-	if err := this.ParseForm(&u); err != nil {
+func (this *NodeController) AddAndEdit() {
+	n := m.Node{}
+	if err := this.ParseForm(&n); err != nil {
 		//handle error
 		this.Rsp(false, err.Error())
 		return
 	}
-	group_id, _ := this.GetInt("Group_id")
-	group := new(m.Group)
-	group.Id = group_id
-	u.Group = group
-
-	id, err := m.AddNode(&u)
+	var id int64
+	var err error
+	Nid, _ := this.GetInt("Id")
+	if Nid > 0 {
+		id, err = m.UpdateNode(&n)
+	} else {
+		group_id, _ := this.GetInt("Group_id")
+		group := new(m.Group)
+		group.Id = group_id
+		n.Group = group
+		id, err = m.AddNode(&n)
+	}
 	if err == nil && id > 0 {
 		this.Rsp(true, "Success")
 		return
@@ -74,4 +80,16 @@ func (this *UserController) AddAndEdit() {
 		return
 	}
 
+}
+
+func (this *NodeController) DelNode() {
+	Id, _ := this.GetInt("Id")
+	status, err := m.DelNodeById(Id)
+	if err == nil && status > 0 {
+		this.Rsp(true, "Success")
+		return
+	} else {
+		this.Rsp(false, err.Error())
+		return
+	}
 }
