@@ -116,19 +116,12 @@ func (this *RoleController) AccessToNode() {
 
 }
 
-// type data struct {
-// 	Id    int64
-// 	Pid   int64
-// 	Level int
-// }
-// type datas struct {
-// 	datas []*data
-// }
-
 func (this *RoleController) AddAccess() {
 	data := this.Input()["data"]
-	fmt.Println(data[0])
-	js, err := j.NewJson([]byte(data[0]))
-	fmt.Println(js.Get("Id"))
-	fmt.Println(err)
+	js, _ := j.NewJson([]byte(data[0]))
+	array, _ := js.Array()
+	for _, v := range array {
+		fmt.Println(v.(map[string]interface{})["Id"])
+	}
+
 }
