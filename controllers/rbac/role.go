@@ -2,8 +2,11 @@ package rbac
 
 import (
 	m "admin/models/rbacmodels"
+	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	j "github.com/bitly/go-simplejson"
 )
 
 type RoleController struct {
@@ -74,4 +77,58 @@ func (this *RoleController) DelRole() {
 		this.Rsp(false, err.Error())
 		return
 	}
+}
+
+func (this *RoleController) Getlist() {
+	roles, _ := m.GetRolelist(1, 1000, "Id")
+	if len(roles) < 1 {
+		roles = []orm.Params{}
+	}
+	this.Data["json"] = &roles
+	this.ServeJson()
+	return
+}
+
+func (this *RoleController) AccessToNode() {
+	roleid, _ := this.GetInt("Id")
+	if this.IsAjax() {
+		nodes, count := m.GetNodelistByGroupid(1)
+		for i := 0; i < len(nodes); i++ {
+			if nodes[i]["Pid"] != 0 {
+				nodes[i]["_parentId"] = nodes[i]["Pid"]
+			} else {
+				nodes[i]["state"] = "closed"
+			}
+		}
+		if len(nodes) < 1 {
+			nodes = []orm.Params{}
+		}
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &nodes}
+		this.ServeJson()
+		return
+	} else {
+		grouplist := m.GroupList()
+		b, _ := json.Marshal(grouplist)
+		this.Data["grouplist"] = string(b)
+		this.Data["roleid"] = roleid
+		this.TplNames = "easyui/rbac/accesstonode.tpl"
+	}
+
+}
+
+// type data struct {
+// 	Id    int64
+// 	Pid   int64
+// 	Level int
+// }
+// type datas struct {
+// 	datas []*data
+// }
+
+func (this *RoleController) AddAccess() {
+	data := this.Input()["data"]
+	fmt.Println(data[0])
+	js, err := j.NewJson([]byte(data[0]))
+	fmt.Println(js.Get("Id"))
+	fmt.Println(err)
 }

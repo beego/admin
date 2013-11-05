@@ -1,18 +1,18 @@
-{// 加载头部公共文件 }
-<include file="../../Pub/Public/header_easyui" />
+{{template "../public/header.tpl"}}
 <script type="text/javascript">
-    var roleid = {$roleid};
-    var grouplist={$grouplist};
+    var roleid = {{.roleid}};
+    var grouplist=$.parseJSON({{.grouplist | stringsToJson}});
+    var URL="/rbac/role"
 $(function(){
     //授权列表
     $("#combobox1").combobox({
-        url:URL+'/index?from=only',
-        valueField:'id',
-        textField:'name',
+        url:URL+'/Getlist',
+        valueField:'Id',
+        textField:'Name',
         value:roleid,
         onSelect:function(record){
             var group_id = $("#group").combobox("getValue");
-            vac.ajax(URL+"/AccessToNode",{id:record.id,group_id:group_id},"POST",function(data){
+            vac.ajax(URL+"/AccessToNode",{Id:record.Id,group_id:group_id},"POST",function(data){
                         $("#treegrid").treegrid("loadData",data)
                     }
             )
@@ -21,14 +21,14 @@ $(function(){
     //加载树
     $("#treegrid").treegrid({
         'url':URL+'/AccessToNode?group_id=1&id='+roleid,
-        'idField':'id',
-        'treeField':'title',
+        'idField':'Id',
+        'treeField':'Title',
         'fitColumns':true,
         'singleSelect':false,
         columns:[[
-            {field:'title',title:'显示名',width:150},
-            {field:'id',title:'ID',hidden:true},
-            {field:'name',title:'应用名',width:150},
+            {field:'Title',title:'显示名',width:150},
+            {field:'Id',title:'ID',hidden:true},
+            {field:'Name',title:'应用名',width:150},
             {field:'opt',title:'勾选子节点',width:60,
                 formatter:function(value,row,index){
                     //var level = $("#treegrid").treegrid("getLevel",row.id);
@@ -43,12 +43,12 @@ $(function(){
             //默认选中已存在的对应关系
             for(var i=0;i<data.rows.length;i++){
                 if(data.rows[i].checked == 1){
-                    $(this).treegrid('select',data.rows[i].id);
+                    $(this).treegrid('select',data.rows[i].Id);
                 }
             }
         },
         onSelect:function(row){
-            $(this).treegrid('expandAll',row.id);
+            $(this).treegrid('expandAll',row.Id);
             var rs = $(this).treegrid("find",row._parentId);
             //选中父节点
             if(row._parentId && rs.isxuanzhong == undefined){
@@ -60,11 +60,11 @@ $(function(){
             //选中level=2的节点
             if(row.children != undefined){
                 for(var i=0;i<row.children.length;i++){
-                    $(this).treegrid('unselect',row.children[i].id);
+                    $(this).treegrid('unselect',row.children[i].Id);
                     //选中level=3的节点
                     if(row.children[i].children != undefined){
                         for(var j=0;j<row.children[i].children.length;j++){
-                            $(this).treegrid('unselect',row.children[i].children[j].id);
+                            $(this).treegrid('unselect',row.children[i].children[j].Id);
                         }
                     }
                 }
@@ -72,13 +72,13 @@ $(function(){
         }
     });
     $("#group").combobox({
-        "valueField":'id',
-        "textField":'title',
+        "valueField":'Id',
+        "textField":'Title',
         data:grouplist,
         value:1,
         onSelect:function(record){
             var roleid = $("#combobox1").combobox("getValue");
-            vac.ajax(URL+"/AccessToNode",{group_id:record.id,id:roleid},"POST",function(data){
+            vac.ajax(URL+"/AccessToNode",{group_id:record.Id,Id:roleid},"POST",function(data){
                         $("#treegrid").treegrid("loadData",data)
                     }
             )
@@ -91,20 +91,20 @@ $(function(){
         var tdata = $("#treegrid").treegrid('getSelections');
         var data=new Array(tdata.length);
         for(var i=0;i<tdata.length;i++){
-            data[i] = {node_id:tdata[i].id,pid:tdata[i].pid,level:tdata[i].level,group_id:tdata[i].group_id};
+            data[i] = {Id:tdata[i].Id,Pid:tdata[i].Pid,Level:tdata[i].Level,Group_id:tdata[i].Group__id};
         }
         var roleid = $("#combobox1").combobox("getValue");
         var group_id = $("#group").combobox("getValue");
-        vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,data:data}, 'POST', function(r){
+        vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,data:$.toJSON(data)}, 'POST', function(r){
             $.messager.alert('提示',r.info,'info');
             $.messager.progress('close');
         })
     }
     function checkalllevel(id){
         var treegrid = $("#treegrid");
-        var Childrens =treegrid.treegrid("getChildren",id);
+        var Childrens =treegrid.treegrid("getChildren",Id);
         for(var i=0;i<Childrens.length;i++){
-            treegrid.treegrid("select",Childrens[i].id);
+            treegrid.treegrid("select",Childrens[i].Id);
         }
     }
 </script>

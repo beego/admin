@@ -55,7 +55,7 @@ $(function(){
                     }
                 }
             }
-        ]]
+        ]],
         onAfterEdit:function(index, data, changes){
             if(vac.isEmpty(changes)){
                 return;

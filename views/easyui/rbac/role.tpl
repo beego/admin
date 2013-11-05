@@ -52,8 +52,8 @@ $(function(){
             },
             {field:'action',title:'操作',width:200,align:'center',
                 formatter:function(value,row,index){
-                    var c = '<a href="'+URL+'/AccessToNode?id='+row.id+'" target="_blank">授权</a> ';
-                    var d = '<a href="'+URL+'/RoleToUserList?id='+row.id+'" target="_blank">用户列表</a> ';
+                    var c = '<a href="'+URL+'/AccessToNode?Id='+row.Id+'" target="_blank">授权</a> ';
+                    var d = '<a href="'+URL+'/RoleToUserList?Id='+row.Id+'" target="_blank">用户列表</a> ';
                     return c+d;
                 }
             }

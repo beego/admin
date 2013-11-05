@@ -100,3 +100,10 @@ func DelRoleById(Id int64) (int64, error) {
 	status, err := o.Delete(&Role{Id: Id})
 	return status, err
 }
+
+func GetNodelistByRoleId(Id int64) (nodes []orm.Params, count int64) {
+	o := orm.NewOrm()
+	role := new(Role)
+	count, _ = o.QueryTable(role).Filter("Node__Role__Id", Id).Values(&nodes)
+	return nodes, count
+}

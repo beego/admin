@@ -3,26 +3,11 @@ package main
 import (
 	"admin/controllers"
 	"admin/controllers/rbac"
+	"admin/lib"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"strconv"
 )
-
-func stringsToJson(str string) string {
-	rs := []rune(str)
-	jsons := ""
-	for _, r := range rs {
-		rint := int(r)
-		if rint < 128 {
-			jsons += string(r)
-		} else {
-			jsons += "\\u" + strconv.FormatInt(int64(rint), 16) // json
-		}
-	}
-
-	return jsons
-}
 
 func main() {
 
@@ -48,10 +33,13 @@ func main() {
 
 	beego.Router("/rbac/role/AddAndEdit", &rbac.RoleController{}, "*:AddAndEdit")
 	beego.Router("/rbac/role/DelRole", &rbac.RoleController{}, "*:DelRole")
+	beego.Router("/rbac/role/AccessToNode", &rbac.RoleController{}, "*:AccessToNode")
+	beego.Router("/rbac/role/AddAccess", &rbac.RoleController{}, "*:AddAccess")
+	beego.Router("/rbac/role/Getlist", &rbac.RoleController{}, "*:Getlist")
 	beego.Router("/rbac/role", &rbac.RoleController{}, "*:Index")
 
 	fmt.Println("Start ok")
-	beego.AddFuncMap("stringsToJson", stringsToJson)
+	beego.AddFuncMap("stringsToJson", lib.StringsToJson)
 	beego.Run()
 
 }

@@ -108,3 +108,10 @@ func DelNodeById(Id int64) (int64, error) {
 	status, err := o.Delete(&Node{Id: Id})
 	return status, err
 }
+
+func GetNodelistByGroupid(Groupid int64) (nodes []orm.Params, count int64) {
+	o := orm.NewOrm()
+	node := new(Node)
+	count, _ = o.QueryTable(node).Filter("Group", Groupid).RelatedSel().Values(&nodes)
+	return nodes, count
+}
