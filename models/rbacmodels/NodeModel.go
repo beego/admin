@@ -115,3 +115,7 @@ func GetNodelistByGroupid(Groupid int64) (nodes []orm.Params, count int64) {
 	count, _ = o.QueryTable(node).Filter("Group", Groupid).RelatedSel().Values(&nodes)
 	return nodes, count
 }
+
+func GetNodeTree() {
+
+}

@@ -138,3 +138,24 @@ func AddRoleNode(roleid int64, nodeid int64) (int64, error) {
 	num, err := m2m.Add(&role)
 	return num, err
 }
+
+func DelUserRole(roleid int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("user_roles").Filter("role_id", roleid).Delete()
+	return err
+}
+func AddRoleUser(roleid int64, userid int64) (int64, error) {
+	o := orm.NewOrm()
+	role := Role{Id: roleid}
+	user := User{Id: userid}
+	m2m := o.QueryM2M(&user, "Role")
+	num, err := m2m.Add(&role)
+	return num, err
+}
+
+func GetUserByRoleId(roleid int64) (users []orm.Params, count int64) {
+	o := orm.NewOrm()
+	user := new(User)
+	count, _ = o.QueryTable(user).Filter("Role__Role__Id", roleid).Values(&users)
+	return users, count
+}

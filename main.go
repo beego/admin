@@ -17,6 +17,8 @@ func main() {
 	//CreateDB()
 
 	beego.Router("/", &controllers.MainController{})
+	beego.Router("/public/index", &controllers.MainController{}, "*:Index")
+
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")
 	beego.Router("/rbac/user/DelUser", &rbac.UserController{}, "*:DelUser")
@@ -35,6 +37,8 @@ func main() {
 	beego.Router("/rbac/role/DelRole", &rbac.RoleController{}, "*:DelRole")
 	beego.Router("/rbac/role/AccessToNode", &rbac.RoleController{}, "*:AccessToNode")
 	beego.Router("/rbac/role/AddAccess", &rbac.RoleController{}, "*:AddAccess")
+	beego.Router("/rbac/role/RoleToUserList", &rbac.RoleController{}, "*:RoleToUserList")
+	beego.Router("/rbac/role/AddRoleToUser", &rbac.RoleController{}, "*:AddRoleToUser")
 	beego.Router("/rbac/role/Getlist", &rbac.RoleController{}, "*:Getlist")
 	beego.Router("/rbac/role", &rbac.RoleController{}, "*:Index")
 

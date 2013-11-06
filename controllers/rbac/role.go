@@ -7,6 +7,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	j "github.com/bitly/go-simplejson"
+	"strconv"
+	"strings"
 )
 
 type RoleController struct {
@@ -92,8 +94,9 @@ func (this *RoleController) Getlist() {
 func (this *RoleController) AccessToNode() {
 	roleid, _ := this.GetInt("Id")
 	if this.IsAjax() {
-		nodes, count := m.GetNodelistByGroupid(1)
-		list, _ := m.GetNodelistByRoleId(1)
+		groupid, _ := this.GetInt("group_id")
+		nodes, count := m.GetNodelistByGroupid(groupid)
+		list, _ := m.GetNodelistByRoleId(roleid)
 		for i := 0; i < len(nodes); i++ {
 			if nodes[i]["Pid"] != 0 {
 				nodes[i]["_parentId"] = nodes[i]["Pid"]
@@ -141,4 +144,48 @@ func (this *RoleController) AddAccess() {
 	}
 	this.Rsp(true, "success")
 
+}
+
+func (this *RoleController) RoleToUserList() {
+	roleid, _ := this.GetInt("Id")
+	if this.IsAjax() {
+		users, count := m.Getuserlist(1, 1000, "Id")
+		list, _ := m.GetUserByRoleId(roleid)
+		for i := 0; i < len(users); i++ {
+			for x := 0; x < len(list); x++ {
+				if users[i]["Id"] == list[x]["Id"] {
+					users[i]["checked"] = 1
+				}
+			}
+		}
+		if len(users) < 1 {
+			users = []orm.Params{}
+		}
+		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
+		this.ServeJson()
+		return
+	} else {
+		this.Data["roleid"] = roleid
+		this.TplNames = "easyui/rbac/roletouserlist.tpl"
+	}
+}
+
+func (this *RoleController) AddRoleToUser() {
+	roleid, _ := this.GetInt("Id")
+	ids := this.GetString("ids")
+	userids := strings.Split(ids, ",")
+	err := m.DelUserRole(roleid)
+	if err != nil {
+		this.Rsp(false, err.Error())
+	}
+	if len(ids) > 0 {
+		for _, v := range userids {
+			id, _ := strconv.Atoi(v)
+			_, err := m.AddRoleUser(roleid, int64(id))
+			if err != nil {
+				this.Rsp(false, err.Error())
+			}
+		}
+	}
+	this.Rsp(true, "success")
 }

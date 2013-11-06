@@ -20,14 +20,14 @@ $(function(){
     });
     //加载树
     $("#treegrid").treegrid({
-        'url':URL+'/AccessToNode?group_id=1&id='+roleid,
+        'url':URL+'/AccessToNode?group_id=1&Id='+roleid,
         'idField':'Id',
         'treeField':'Title',
         'fitColumns':true,
         'singleSelect':false,
         columns:[[
-            {field:'Title',title:'显示名',width:150},
             {field:'Id',title:'ID',hidden:true},
+            {field:'Title',title:'显示名',width:150},
             {field:'Name',title:'应用名',width:150}
         ]],
         onLoadSuccess:function(node,data){
@@ -40,7 +40,10 @@ $(function(){
         },
         onSelect:function(row){
             $(this).treegrid('expandAll',row.Id);
-            $(this).treegrid('select',row._parentId);
+            if(row._parentId != 0){
+                $(this).treegrid('select',row._parentId);
+            }
+            
         },
         onUnselect:function(row){
             //选中level=2的节点
