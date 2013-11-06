@@ -2,6 +2,7 @@ package rbacmodels
 
 import (
 	"errors"
+	//"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"log"
@@ -103,7 +104,37 @@ func DelRoleById(Id int64) (int64, error) {
 
 func GetNodelistByRoleId(Id int64) (nodes []orm.Params, count int64) {
 	o := orm.NewOrm()
-	role := new(Role)
-	count, _ = o.QueryTable(role).Filter("Node__Role__Id", Id).Values(&nodes)
+	node := new(Node)
+	count, _ = o.QueryTable(node).Filter("Role__Role__Id", Id).Values(&nodes)
 	return nodes, count
+}
+
+func DelGroupNode(roleid int64, groupid int64) error {
+	var nodes []*Node
+	var node Node
+	role := Role{Id: roleid}
+	o := orm.NewOrm()
+	num, err := o.QueryTable(node).Filter("Group", groupid).RelatedSel().All(&nodes)
+	if err != nil {
+		return err
+	}
+	if num < 1 {
+		return nil
+	}
+	for _, n := range nodes {
+		m2m := o.QueryM2M(n, "Role")
+		_, err1 := m2m.Remove(&role)
+		if err1 != nil {
+			return err1
+		}
+	}
+	return nil
+}
+func AddRoleNode(roleid int64, nodeid int64) (int64, error) {
+	o := orm.NewOrm()
+	role := Role{Id: roleid}
+	node := Node{Id: nodeid}
+	m2m := o.QueryM2M(&node, "Role")
+	num, err := m2m.Add(&role)
+	return num, err
 }

@@ -28,16 +28,7 @@ $(function(){
         columns:[[
             {field:'Title',title:'显示名',width:150},
             {field:'Id',title:'ID',hidden:true},
-            {field:'Name',title:'应用名',width:150},
-            {field:'opt',title:'勾选子节点',width:60,
-                formatter:function(value,row,index){
-                    //var level = $("#treegrid").treegrid("getLevel",row.id);
-                    if(row.level <3){
-                        return "<a href='#'  onclick='checkalllevel("+row.id+")'>选中子节点</a>";
-                    }
-
-                }
-            }
+            {field:'Name',title:'应用名',width:150}
         ]],
         onLoadSuccess:function(node,data){
             //默认选中已存在的对应关系
@@ -49,12 +40,7 @@ $(function(){
         },
         onSelect:function(row){
             $(this).treegrid('expandAll',row.Id);
-            var rs = $(this).treegrid("find",row._parentId);
-            //选中父节点
-            if(row._parentId && rs.isxuanzhong == undefined){
-                rs.isxuanzhong = 1;
-                $(this).treegrid('select',row._parentId);
-            }
+            $(this).treegrid('select',row._parentId);
         },
         onUnselect:function(row){
             //选中level=2的节点
@@ -91,7 +77,7 @@ $(function(){
         var tdata = $("#treegrid").treegrid('getSelections');
         var data=new Array(tdata.length);
         for(var i=0;i<tdata.length;i++){
-            data[i] = {Id:tdata[i].Id,Pid:tdata[i].Pid,Level:tdata[i].Level,Group_id:tdata[i].Group__id};
+            data[i] = {Id:tdata[i].Id};
         }
         var roleid = $("#combobox1").combobox("getValue");
         var group_id = $("#group").combobox("getValue");
@@ -99,13 +85,6 @@ $(function(){
             $.messager.alert('提示',r.info,'info');
             $.messager.progress('close');
         })
-    }
-    function checkalllevel(id){
-        var treegrid = $("#treegrid");
-        var Childrens =treegrid.treegrid("getChildren",Id);
-        for(var i=0;i<Childrens.length;i++){
-            treegrid.treegrid("select",Childrens[i].Id);
-        }
     }
 </script>
 <body>

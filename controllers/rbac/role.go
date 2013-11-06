@@ -3,7 +3,7 @@ package rbac
 import (
 	m "admin/models/rbacmodels"
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	j "github.com/bitly/go-simplejson"
@@ -93,11 +93,17 @@ func (this *RoleController) AccessToNode() {
 	roleid, _ := this.GetInt("Id")
 	if this.IsAjax() {
 		nodes, count := m.GetNodelistByGroupid(1)
+		list, _ := m.GetNodelistByRoleId(1)
 		for i := 0; i < len(nodes); i++ {
 			if nodes[i]["Pid"] != 0 {
 				nodes[i]["_parentId"] = nodes[i]["Pid"]
 			} else {
 				nodes[i]["state"] = "closed"
+			}
+			for x := 0; x < len(list); x++ {
+				if nodes[i]["Id"] == list[x]["Id"] {
+					nodes[i]["checked"] = 1
+				}
 			}
 		}
 		if len(nodes) < 1 {
@@ -117,11 +123,22 @@ func (this *RoleController) AccessToNode() {
 }
 
 func (this *RoleController) AddAccess() {
+	roleid, _ := this.GetInt("roleid")
+	group_id, _ := this.GetInt("group_id")
+	err := m.DelGroupNode(roleid, group_id)
+	if err != nil {
+		this.Rsp(false, err.Error())
+	}
 	data := this.Input()["data"]
 	js, _ := j.NewJson([]byte(data[0]))
 	array, _ := js.Array()
 	for _, v := range array {
-		fmt.Println(v.(map[string]interface{})["Id"])
+		Id, _ := v.(map[string]interface{})["Id"].(json.Number).Int64()
+		_, err := m.AddRoleNode(roleid, Id)
+		if err != nil {
+			this.Rsp(false, err.Error())
+		}
 	}
+	this.Rsp(true, "success")
 
 }
