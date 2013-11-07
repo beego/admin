@@ -10,7 +10,7 @@ var URL="/public"
                     $(this).tree("toggle",node.target);
                     return false;
                 }
-                var href = APP+node.attributes.url;
+                var href = node.attributes.url;
                 var tabs = $("#tabs");
                 if(href){
                     var content = '<iframe scrolling="auto" frameborder="0"  src="'+href+'" style="width:100%;height:100%;"></iframe>';
@@ -179,11 +179,11 @@ var URL="/public"
     </div>
     <ul class="ht_nav">
         <volist name="grouplist" id="vo">
-            <li><span><a class="current"  href="#" onClick="selectgroup({$vo.id});$('.ht_nav li a').removeClass('current');$(this).addClass('current')">{$vo.title}</a></span></li>
+            <li><span><a class="current"  href="#" onClick="selectgroup({$vo.id});$('.ht_nav li a').removeClass('current');$(this).addClass('current')"></a></span></li>
         </volist>
     </ul>
     <div id="header-inner" style="float:right; overflow:hidden; height:80px; width:300px; line-height:25px; text-align:right; padding-right:20px;margin-top:-50px; ">
-        欢迎你！ {$Think.session.loginUserName} <a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
+        欢迎你！ Nikename<a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
         <a href="__APP__/Public/logout/" target="_parent"> 退 出</a>
     </div>
 </div>

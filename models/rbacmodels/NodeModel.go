@@ -57,6 +57,16 @@ func GetNodelist(page int64, page_size int64, sort string) (nodes []orm.Params, 
 	return nodes, count
 }
 
+func ReadNode(nid int64) (Node, error) {
+	o := orm.NewOrm()
+	node := Node{Id: nid}
+	err := o.Read(&node)
+	if err != nil {
+		return node, err
+	}
+	return node, nil
+}
+
 //添加用户
 func AddNode(n *Node) (int64, error) {
 	if err := checkNode(n); err != nil {
@@ -116,6 +126,13 @@ func GetNodelistByGroupid(Groupid int64) (nodes []orm.Params, count int64) {
 	return nodes, count
 }
 
-func GetNodeTree() {
-
+func GetNodeTree(pid int64, level int64) ([]orm.Params, error) {
+	o := orm.NewOrm()
+	var node Node
+	var nodes []orm.Params
+	_, err := o.QueryTable(node).Filter("Pid", pid).Filter("Level", level).Filter("Status", 2).Values(&nodes)
+	if err != nil {
+		return nodes, err
+	}
+	return nodes, nil
 }

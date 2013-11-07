@@ -70,6 +70,12 @@ func (this *NodeController) AddAndEdit() {
 		group := new(m.Group)
 		group.Id = group_id
 		n.Group = group
+		if n.Pid != 0 {
+			n1, _ := m.ReadNode(n.Pid)
+			n.Level = n1.Level + 1
+		} else {
+			n.Level = 1
+		}
 		id, err = m.AddNode(&n)
 	}
 	if err == nil && id > 0 {
