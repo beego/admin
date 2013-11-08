@@ -1,16 +1,14 @@
 package rbac
 
 import (
+	c "admin/controllers"
 	m "admin/models/rbacmodels"
 	"encoding/json"
-	//"fmt"
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	//"strconv"
 )
 
 type NodeController struct {
-	beego.Controller
+	c.CommonController
 }
 
 func (this *NodeController) Rsp(status bool, str string) {

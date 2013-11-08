@@ -3,17 +3,12 @@ package controllers
 import (
 	m "admin/models/rbacmodels"
 	"fmt"
-	"github.com/astaxie/beego"
 )
 
 type MainController struct {
-	beego.Controller
+	CommonController
 }
 
-func (this *MainController) Rsp(status bool, str string) {
-	this.Data["json"] = &map[string]interface{}{"status": status, "info": str}
-	this.ServeJson()
-}
 func (this *MainController) Get() {
 	this.TplNames = "easyui/public/index.tpl"
 }
@@ -33,6 +28,7 @@ type Attributes struct {
 }
 
 func (this *MainController) Index() {
+	m.Syncdb()
 	nodes, _ := m.GetNodeTree(0, 1)
 	tree := make([]Tree, len(nodes))
 	for k, v := range nodes {
@@ -45,7 +41,6 @@ func (this *MainController) Index() {
 			tree[k].Children[k1].Id = v1["Id"].(int64)
 			tree[k].Children[k1].Text = v1["Title"].(string)
 			tree[k].Children[k1].Attributes.Url = "/" + v["Name"].(string) + "/" + v1["Name"].(string)
-
 		}
 
 	}

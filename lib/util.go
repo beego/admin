@@ -14,6 +14,10 @@ func Strtomd5(s string) string {
 	return rs
 }
 
+func Pwdhash(str string) string {
+	return Strtomd5(str)
+}
+
 func StringsToJson(str string) string {
 	rs := []rune(str)
 	jsons := ""

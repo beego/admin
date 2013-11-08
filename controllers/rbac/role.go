@@ -4,7 +4,7 @@ import (
 	m "admin/models/rbacmodels"
 	"encoding/json"
 	//"fmt"
-	"github.com/astaxie/beego"
+	c "admin/controllers"
 	"github.com/astaxie/beego/orm"
 	j "github.com/bitly/go-simplejson"
 	"strconv"
@@ -12,13 +12,9 @@ import (
 )
 
 type RoleController struct {
-	beego.Controller
+	c.CommonController
 }
 
-func (this *RoleController) Rsp(status bool, str string) {
-	this.Data["json"] = &map[string]interface{}{"status": status, "info": str}
-	this.ServeJson()
-}
 func (this *RoleController) Index() {
 	if this.IsAjax() {
 		page, _ := this.GetInt("page")

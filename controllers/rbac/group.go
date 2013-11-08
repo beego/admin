@@ -1,17 +1,12 @@
 package rbac
 
 import (
+	c "admin/controllers"
 	m "admin/models/rbacmodels"
-	"github.com/astaxie/beego"
 )
 
 type GroupController struct {
-	beego.Controller
-}
-
-func (this *GroupController) Rsp(status bool, str string) {
-	this.Data["json"] = &map[string]interface{}{"status": status, "info": str}
-	this.ServeJson()
+	c.CommonController
 }
 
 func (this *GroupController) Index() {
