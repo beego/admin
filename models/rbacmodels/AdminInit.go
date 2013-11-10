@@ -60,8 +60,8 @@ func insertRole() {
 func insertNodes() {
 	g := new(Group)
 	g.Id = 1
-	nodes := make(map[int]Node)
-	nodes = {
+	//nodes := make([20]Node)
+	nodes := [24]Node{
 		{Name: "rbac", Title: "RBAC管理", Remark: "", Level: 1, Pid: 0, Status: 2, Group: g},
 		{Name: "node", Title: "节点管理", Remark: "", Level: 2, Pid: 1, Status: 2, Group: g},
 		{Name: "index", Title: "节点显示", Remark: "", Level: 3, Pid: 2, Status: 2, Group: g},
@@ -88,6 +88,14 @@ func insertNodes() {
 		{Name: "AddRoleToUser", Title: "授权用户", Remark: "", Level: 3, Pid: 16, Status: 2, Group: g},
 	}
 	for _, v := range nodes {
-		o.Insert(v)
+		n := new(Node)
+		n.Name = v.Name
+		n.Title = v.Title
+		n.Remark = v.Remark
+		n.Level = v.Level
+		n.Pid = v.Pid
+		n.Status = v.Status
+		n.Group = v.Group
+		o.Insert(n)
 	}
 }

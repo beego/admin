@@ -4,9 +4,11 @@ import (
 	"admin/controllers"
 	"admin/controllers/rbac"
 	"admin/lib"
+	"admin/models/rbacmodels"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"os"
 )
 
 func main() {
@@ -40,7 +42,18 @@ func main() {
 	beego.Router("/rbac/role", &rbac.RoleController{}, "*:Index")
 
 	fmt.Println("Start ok")
+	//判断初始化参数
+	initArgs()
 	beego.AddFuncMap("stringsToJson", lib.StringsToJson)
 	beego.Run()
 
+}
+
+func initArgs() {
+	args := os.Args
+	for _, v := range args {
+		if v == "-syncdb" {
+			rbacmodels.Syncdb()
+		}
+	}
 }

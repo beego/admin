@@ -28,6 +28,5 @@ func init() {
 		dns = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", db_user, db_pass, db_host, db_port, db_name)
 		break
 	}
-	fmt.Println(dns)
 	orm.RegisterDataBase("default", db_type, dns)
 }

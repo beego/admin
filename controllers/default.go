@@ -28,7 +28,6 @@ type Attributes struct {
 }
 
 func (this *MainController) Index() {
-	m.Syncdb()
 	nodes, _ := m.GetNodeTree(0, 1)
 	tree := make([]Tree, len(nodes))
 	for k, v := range nodes {
