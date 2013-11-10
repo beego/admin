@@ -1,10 +1,10 @@
 package rbac
 
 import (
-	c "admin/controllers"
-	m "admin/models/rbacmodels"
 	"encoding/json"
 	"github.com/astaxie/beego/orm"
+	c "github.com/osgochina/admin/controllers"
+	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
 type NodeController struct {

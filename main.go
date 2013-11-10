@@ -1,13 +1,13 @@
 package main
 
 import (
-	"admin/controllers"
-	"admin/controllers/rbac"
-	"admin/lib"
-	"admin/models/rbacmodels"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/osgochina/admin/controllers"
+	"github.com/osgochina/admin/controllers/rbac"
+	"github.com/osgochina/admin/lib"
+	"github.com/osgochina/admin/models/rbacmodels"
 	"os"
 )
 

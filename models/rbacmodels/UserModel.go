@@ -1,7 +1,7 @@
 package rbacmodels
 
 import (
-	"admin/lib"
+	"github.com/osgochina/admin/lib"
 	"errors"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"

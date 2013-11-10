@@ -1,8 +1,8 @@
 package rbacmodels
 
 import (
-	"admin/lib"
 	"fmt"
+	"github.com/osgochina/admin/lib"
 	//"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )

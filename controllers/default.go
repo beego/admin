@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	m "admin/models/rbacmodels"
 	"fmt"
+	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
 type MainController struct {
