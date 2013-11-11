@@ -2,7 +2,7 @@ package rbacmodels
 
 import (
 	"errors"
-	//"fmt"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"log"
@@ -158,4 +158,22 @@ func GetUserByRoleId(roleid int64) (users []orm.Params, count int64) {
 	user := new(User)
 	count, _ = o.QueryTable(user).Filter("Role__Role__Id", roleid).Values(&users)
 	return users, count
+}
+
+func AccessList(uid int64) {
+	var list []orm.Params
+	var roles []orm.Params
+	o := orm.NewOrm()
+	role := new(Role)
+	o.QueryTable(role).Filter("User__User__Id", uid).Values(&roles)
+	var nodes []orm.Params
+	node := new(Node)
+	for _, r := range roles {
+		o.QueryTable(node).Filter("Role__Role__Id", r["Id"]).Values(&nodes)
+		for _, n := range nodes {
+			list = append(list, n)
+		}
+	}
+	fmt.Println(list)
+
 }

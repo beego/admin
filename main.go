@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+
 	"github.com/astaxie/beego/orm"
 	"github.com/osgochina/admin/controllers"
 	"github.com/osgochina/admin/controllers/rbac"
@@ -12,6 +13,7 @@ import (
 )
 
 func main() {
+
 	orm.Debug = true
 	fmt.Println("Starting....")
 	//orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")

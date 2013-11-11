@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/osgochina/admin/lib/rbac"
 )
 
 type CommonController struct {
@@ -29,4 +30,6 @@ func init() {
 		break
 	}
 	orm.RegisterDataBase("default", db_type, dns)
+	//验证权限
+	rbac.Access()
 }

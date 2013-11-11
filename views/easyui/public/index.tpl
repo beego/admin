@@ -6,7 +6,7 @@ var URL="/public"
         $("#tree").tree({
             url:URL+'/index',
             onClick:function(node){
-                if(node.attributes == undefined){
+                if(node.attributes.url == ""){
                     $(this).tree("toggle",node.target);
                     return false;
                 }
