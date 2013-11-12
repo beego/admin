@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-
 	"github.com/astaxie/beego/orm"
 	"github.com/osgochina/admin/controllers"
 	"github.com/osgochina/admin/controllers/rbac"
