@@ -2,6 +2,7 @@ package rbacmodels
 
 import (
 	"errors"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"log"
@@ -21,7 +22,7 @@ type Node struct {
 }
 
 func (n *Node) TableName() string {
-	return "node"
+	return beego.AppConfig.String("rbac_node_table")
 }
 
 //验证用户信息
@@ -108,8 +109,8 @@ func UpdateNode(n *Node) (int64, error) {
 	if len(node) == 0 {
 		return 0, errors.New("update field is empty")
 	}
-
-	num, err := o.QueryTable("node").Filter("Id", n.Id).Update(node)
+	var table Node
+	num, err := o.QueryTable(table).Filter("Id", n.Id).Update(node)
 	return num, err
 }
 

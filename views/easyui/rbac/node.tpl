@@ -8,7 +8,7 @@
     var URL="/rbac/node";
     $(function(){
         $("#treegrid").treegrid({
-            url:URL,
+            url:URL+"/index",
             idField:"Id",
             treeField:"Title",
             fitColumns:"true",

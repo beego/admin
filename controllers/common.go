@@ -31,5 +31,5 @@ func init() {
 	}
 	orm.RegisterDataBase("default", db_type, dns)
 	//验证权限
-	rbac.Access()
+	rbac.AccessRegister()
 }

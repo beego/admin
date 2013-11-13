@@ -1,10 +1,11 @@
 package rbacmodels
 
 import (
-	"github.com/osgochina/admin/lib"
 	"errors"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
+	"github.com/osgochina/admin/lib"
 	"log"
 	"time"
 )
@@ -25,7 +26,7 @@ type User struct {
 }
 
 func (u *User) TableName() string {
-	return "user"
+	return beego.AppConfig.String("rbac_user_table")
 }
 
 func (u *User) Valid(v *validation.Validation) {
@@ -115,8 +116,8 @@ func UpdateUser(u *User) (int64, error) {
 	if len(user) == 0 {
 		return 0, errors.New("update field is empty")
 	}
-
-	num, err := o.QueryTable("user").Filter("Id", u.Id).Update(user)
+	var table User
+	num, err := o.QueryTable(table).Filter("Id", u.Id).Update(user)
 	return num, err
 }
 

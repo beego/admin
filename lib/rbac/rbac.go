@@ -5,29 +5,53 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	m "github.com/osgochina/admin/models/rbacmodels"
+	"strconv"
 	"strings"
 )
 
-func Access() {
+func AccessRegister() {
 	var Check = func(ctx *context.Context) {
-
-		ret := CheckAccess(ctx.Request.RequestURI)
-		fmt.Println(ret)
+		user_auth_type, _ := strconv.Atoi(beego.AppConfig.String("user_auth_type"))
+		var accesslist map[string]bool
+		if user_auth_type > 0 {
+			if user_auth_type == 1 {
+				accesslist, _ = GetAccessList(1)
+			} else if user_auth_type == 2 {
+				accesslist, _ = GetAccessList(1)
+			}
+			ret := AccessDecision(ctx.Request.RequestURI, accesslist)
+			fmt.Println(ret)
+		}
 	}
 	beego.AddFilter("*", "BeforRouter", Check)
 }
 
-func CheckAccess(url string) bool {
+func CheckAccess(params []string) bool {
+	for _, nap := range strings.Split(beego.AppConfig.String("not_auth_package"), ",") {
+		if params[1] == nap {
+			return false
+		}
+	}
+	return false
+}
+
+func AccessDecision(url string, accesslist map[string]bool) bool {
 	fmt.Println(url)
 	urllist := strings.Split(url, "?")
 	params := strings.Split(strings.ToLower(urllist[0]), "/")
-	if len(params) < 3 {
+	if len(params) < 4 {
 		return false
 	}
-	str := fmt.Sprintf("%s/%s/%s", params[0], params[1], params[2])
-	accesslist, _ := GetAccessList(1)
-	_, ok := accesslist[str]
-	if ok != false {
+	if CheckAccess(params) {
+		s := fmt.Sprintf("%s/%s/%s", params[1], params[2], params[3])
+		if accesslist == nil {
+			return false
+		}
+		_, ok := accesslist[s]
+		if ok != false {
+			return true
+		}
+	} else {
 		return true
 	}
 	return false
@@ -42,7 +66,6 @@ type AccessNode struct {
 func GetAccessList(uid int64) (map[string]bool, error) {
 	list, err := m.AccessList(uid)
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 	alist := make([]*AccessNode, 0)

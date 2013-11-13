@@ -2,6 +2,7 @@ package rbacmodels
 
 import (
 	"errors"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"log"
@@ -18,7 +19,7 @@ type Group struct {
 }
 
 func (g *Group) TableName() string {
-	return "group"
+	return beego.AppConfig.String("rbac_group_table")
 }
 
 func init() {
@@ -88,8 +89,8 @@ func UpdateGroup(g *Group) (int64, error) {
 	if len(group) == 0 {
 		return 0, errors.New("update field is empty")
 	}
-
-	num, err := o.QueryTable("group").Filter("Id", g.Id).Update(group)
+	var table Group
+	num, err := o.QueryTable(table).Filter("Id", g.Id).Update(group)
 	return num, err
 }
 

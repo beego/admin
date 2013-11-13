@@ -2,6 +2,7 @@ package rbacmodels
 
 import (
 	"errors"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	"log"
@@ -19,7 +20,7 @@ type Role struct {
 }
 
 func (r *Role) TableName() string {
-	return "role"
+	return beego.AppConfig.String("rbac_role_table")
 }
 
 func init() {
@@ -90,8 +91,8 @@ func UpdateRole(r *Role) (int64, error) {
 	if len(role) == 0 {
 		return 0, errors.New("update field is empty")
 	}
-
-	num, err := o.QueryTable("role").Filter("Id", r.Id).Update(role)
+	var table Role
+	num, err := o.QueryTable(table).Filter("Id", r.Id).Update(role)
 	return num, err
 }
 

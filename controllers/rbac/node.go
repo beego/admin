@@ -2,7 +2,6 @@ package rbac
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego/orm"
 	c "github.com/osgochina/admin/controllers"
 	m "github.com/osgochina/admin/models/rbacmodels"
@@ -45,7 +44,6 @@ func (this *NodeController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		fmt.Println(this.Ctx.Request)
 		grouplist := m.GroupList()
 		b, _ := json.Marshal(grouplist)
 		this.Data["grouplist"] = string(b)

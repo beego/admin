@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	//"fmt"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
@@ -34,7 +34,6 @@ func (this *MainController) Index() {
 		tree[k].Id = v["Id"].(int64)
 		tree[k].Text = v["Title"].(string)
 		children, _ := m.GetNodeTree(v["Id"].(int64), 2)
-		fmt.Println(children)
 		tree[k].Children = make([]Tree, len(children))
 		for k1, v1 := range children {
 			tree[k].Children[k1].Id = v1["Id"].(int64)

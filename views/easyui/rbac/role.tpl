@@ -9,7 +9,7 @@ $(function(){
     //角色列表
     $("#datagrid").datagrid({
         title:'角色管理',
-        url:URL,
+        url:URL+"/index",
         method:'POST',
         pagination:true,
         fitColumns:true,

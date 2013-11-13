@@ -10,7 +10,7 @@ $(function(){
     //用户列表
     $("#datagrid").datagrid({
         title:'分组列表',
-        url:URL+'',
+        url:URL+'/index',
         method:'POST',
         pagination:true,
         fitColumns:true,
