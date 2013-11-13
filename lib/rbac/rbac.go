@@ -15,7 +15,11 @@ func AccessRegister() {
 		var accesslist map[string]bool
 		if user_auth_type > 0 {
 			if user_auth_type == 1 {
-				accesslist, _ = GetAccessList(1)
+				listbysession := ctx.Input.Session("accesslist")
+				if listbysession != nil {
+					accesslist = listbysession.(map[string]bool)
+				}
+				//accesslist, _ = GetAccessList(1)
 			} else if user_auth_type == 2 {
 				accesslist, _ = GetAccessList(1)
 			}
@@ -23,7 +27,7 @@ func AccessRegister() {
 			fmt.Println(ret)
 		}
 	}
-	beego.AddFilter("*", "BeforRouter", Check)
+	beego.AddFilter("*", "AfterStatic", Check)
 }
 
 func CheckAccess(params []string) bool {

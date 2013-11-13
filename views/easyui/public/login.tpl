@@ -1,9 +1,17 @@
-{{template "header"}}
+{{template "../public/header.tpl"}}
 <body>
-	<h1>演示嵌套</h1>
-<ul>
-    <li>嵌套使用define定义子模板</li>
-    <li>调用使用template</li>
-</ul>
+<div>
+<table>
+	<tr>
+		<td>用户名：</td><td><input type="text" name="username"/></td>
+	</tr>
+	<tr>
+		<td>密码：</td><td><input type="text" name="password"/></td>
+	</tr>
+	<tr>
+		<td></td><td><input type="button" value="登录"/></td>
+	</tr>
+</table>
+</div>
 </body>
 </html>

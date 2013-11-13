@@ -16,8 +16,9 @@ func main() {
 	//orm.Debug = true
 	fmt.Println("Starting....")
 	//orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
-	beego.Router("/", &controllers.MainController{})
+	beego.Router("/", &controllers.MainController{}, "*:Index")
 	beego.Router("/public/index", &controllers.MainController{}, "*:Index")
+	beego.Router("/public/login", &controllers.MainController{}, "*:Login")
 
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")

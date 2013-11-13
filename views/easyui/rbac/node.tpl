@@ -43,11 +43,6 @@
                 },
                 {field:'Remark',title:'描述',width:150,editor:'text'}
             ]],
-            onLoadSuccess:function(row,data){
-                console.log(row)
-                console.log(data)
-                //$(this).treegrid("loadData",data);
-            },
             onAfterEdit:function(c){
                 if(vac.isEmpty(c)){
                     return;
@@ -57,7 +52,7 @@
                         vac.alert(r.info);
                     }else{
                         var group_id = $("#group").combobox("getValue");
-                        vac.ajax(URL,{group_id:group_id},"POST",function(data){
+                        vac.ajax(URL+"/index",{group_id:group_id},"POST",function(data){
                                     $("#treegrid").treegrid("loadData",data)
                                 }
                         );
@@ -69,7 +64,7 @@
             },
             onContextMenu:function(e, row){
                 e.preventDefault();
-                $(this).treegrid('select', row.id);
+                $(this).treegrid('select', row.Id);
                 $('#mm').menu('show',{
                     left: e.clientX,
                     top: e.clientY
