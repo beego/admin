@@ -2,11 +2,9 @@ package rbac
 
 import (
 	"encoding/json"
-	m "github.com/osgochina/admin/models/rbacmodels"
-	//"fmt"
 	"github.com/astaxie/beego/orm"
-	j "github.com/bitly/go-simplejson"
 	c "github.com/osgochina/admin/controllers"
+	m "github.com/osgochina/admin/models/rbacmodels"
 	"strconv"
 	"strings"
 )
@@ -128,12 +126,11 @@ func (this *RoleController) AddAccess() {
 	if err != nil {
 		this.Rsp(false, err.Error())
 	}
-	data := this.Input()["data"]
-	js, _ := j.NewJson([]byte(data[0]))
-	array, _ := js.Array()
-	for _, v := range array {
-		Id, _ := v.(map[string]interface{})["Id"].(json.Number).Int64()
-		_, err := m.AddRoleNode(roleid, Id)
+	ids := this.GetString("ids")
+	nodeids := strings.Split(ids, ",")
+	for _, v := range nodeids {
+		id, _ := strconv.Atoi(v)
+		_, err := m.AddRoleNode(roleid, int64(id))
 		if err != nil {
 			this.Rsp(false, err.Error())
 		}

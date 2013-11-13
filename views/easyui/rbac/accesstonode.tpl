@@ -80,11 +80,11 @@ $(function(){
         var tdata = $("#treegrid").treegrid('getSelections');
         var data=new Array(tdata.length);
         for(var i=0;i<tdata.length;i++){
-            data[i] = {Id:tdata[i].Id};
+            data[i] = tdata[i].Id;
         }
         var roleid = $("#combobox1").combobox("getValue");
         var group_id = $("#group").combobox("getValue");
-        vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,data:$.toJSON(data)}, 'POST', function(r){
+        vac.ajax(URL+'/AddAccess', {roleid:roleid,group_id:group_id,ids:data.join(",")}, 'POST', function(r){
             $.messager.alert('提示',r.info,'info');
             $.messager.progress('close');
         })
