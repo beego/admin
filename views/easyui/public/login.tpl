@@ -1,5 +1,6 @@
 {{template "../public/header.tpl"}}
 <script type="text/javascript">
+var URL="/public"
 	$(function(){
 		$("#dialog").dialog({
 			closable:false,
@@ -8,14 +9,15 @@
             iconCls:'icon-save',
             handler:function(){
                 $("#form").form('submit',{
-                    url:URL+'/Login?isajax=1',
+                    url:URL+'/login?isajax=1',
                     onSubmit:function(){
                         return $("#form").form('validate');
                     },
                     success:function(r){
                         var r = $.parseJSON( r );
                         if(r.status){
-                            location.href = URL+"/Index"
+                        	vac.alert(r.info);
+                            location.href = URL+"/index"
                         }else{
                             vac.alert(r.info);
                         }

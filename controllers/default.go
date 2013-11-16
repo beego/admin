@@ -1,7 +1,8 @@
 package controllers
 
 import (
-	//"fmt"
+	"fmt"
+	"github.com/osgochina/admin/lib/rbac"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
@@ -46,5 +47,19 @@ func (this *MainController) Index() {
 	}
 }
 func (this *MainController) Login() {
+	isajax := this.GetString("isajax")
+	if isajax == "1" {
+		username := this.GetString("username")
+		password := this.GetString("password")
+		user, err := rbac.CheckLogin(username, password)
+		if err == nil {
+			this.SetSession("userinfo", user)
+			//fmt.Println(this.GetSession("userinfo"))
+			this.Rsp(true, "登录成功")
+		} else {
+			this.Rsp(false, err.Error())
+		}
+
+	}
 	this.TplNames = "easyui/public/login.tpl"
 }

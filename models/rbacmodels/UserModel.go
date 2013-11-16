@@ -126,3 +126,10 @@ func DelUserById(Id int64) (int64, error) {
 	status, err := o.Delete(&User{Id: Id})
 	return status, err
 }
+
+func GetUserByUsername(username string) (user User) {
+	user = User{Username: username}
+	o := orm.NewOrm()
+	o.Read(&user, "Username")
+	return user
+}
