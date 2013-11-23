@@ -19,6 +19,7 @@ func main() {
 	beego.Router("/", &controllers.MainController{}, "*:Index")
 	beego.Router("/public/index", &controllers.MainController{}, "*:Index")
 	beego.Router("/public/login", &controllers.MainController{}, "*:Login")
+	beego.Router("/public/logout", &controllers.MainController{}, "*:Logout")
 
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")

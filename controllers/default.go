@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/osgochina/admin/lib/rbac"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
@@ -54,12 +54,19 @@ func (this *MainController) Login() {
 		user, err := rbac.CheckLogin(username, password)
 		if err == nil {
 			this.SetSession("userinfo", user)
-			//fmt.Println(this.GetSession("userinfo"))
 			this.Rsp(true, "登录成功")
 		} else {
 			this.Rsp(false, err.Error())
 		}
 
 	}
+	userinfo := this.GetSession("userinfo")
+	if userinfo != nil {
+		this.Ctx.Redirect(302, "/public/index")
+	}
 	this.TplNames = "easyui/public/login.tpl"
+}
+func (this *MainController) Logout() {
+	this.DelSession("userinfo")
+	this.Ctx.Redirect(302, "/public/login")
 }

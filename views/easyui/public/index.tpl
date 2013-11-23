@@ -184,7 +184,7 @@ var URL="/public"
     </ul>
     <div id="header-inner" style="float:right; overflow:hidden; height:80px; width:300px; line-height:25px; text-align:right; padding-right:20px;margin-top:-50px; ">
         欢迎你！ Nikename<a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
-        <a href="__APP__/Public/logout/" target="_parent"> 退 出</a>
+        <a href="/public/logout" target="_parent"> 退 出</a>
     </div>
 </div>
 <div id="dialog" >
