@@ -14,43 +14,58 @@ import (
 func AccessRegister() {
 	var Check = func(ctx *context.Context) {
 		user_auth_type, _ := strconv.Atoi(beego.AppConfig.String("user_auth_type"))
+		rbac_auth_gateway := beego.AppConfig.String("rbac_auth_gateway")
 		var accesslist map[string]bool
 		if user_auth_type > 0 {
-			if user_auth_type == 1 {
-				listbysession := ctx.Input.Session("accesslist")
-				if listbysession != nil {
-					accesslist = listbysession.(map[string]bool)
+			params := strings.Split(strings.ToLower(ctx.Request.RequestURI), "/")
+			if CheckAccess(params) {
+				uinfo := ctx.Input.Session("userinfo")
+				if uinfo == nil {
+					ctx.Redirect(302, rbac_auth_gateway)
 				}
-				//accesslist, _ = GetAccessList(1)
-			} else if user_auth_type == 2 {
-				accesslist, _ = GetAccessList(1)
+				//admin用户不用认证权限
+				adminuser := beego.AppConfig.String("rbac_admin_user")
+				if uinfo.(m.User).Username == adminuser {
+					return
+				}
+
+				if user_auth_type == 1 {
+					listbysession := ctx.Input.Session("accesslist")
+					if listbysession != nil {
+						accesslist = listbysession.(map[string]bool)
+					}
+				} else if user_auth_type == 2 {
+
+					accesslist, _ = GetAccessList(uinfo.(m.User).Id)
+				}
+
+				ret := AccessDecision(params, accesslist)
+				if !ret {
+					ctx.Output.Json(&map[string]interface{}{"status": false, "info": "权限不足"}, true, false)
+				}
 			}
-			ret := AccessDecision(ctx.Request.RequestURI, accesslist)
-			fmt.Println(ret)
+
 		}
 	}
 	beego.AddFilter("*", "AfterStatic", Check)
 }
 
 func CheckAccess(params []string) bool {
+	if len(params) < 3 {
+		return false
+	}
 	for _, nap := range strings.Split(beego.AppConfig.String("not_auth_package"), ",") {
 		if params[1] == nap {
 			return false
 		}
 	}
-	return false
+	return true
 }
 
-func AccessDecision(url string, accesslist map[string]bool) bool {
-	fmt.Println(url)
-	urllist := strings.Split(url, "?")
-	params := strings.Split(strings.ToLower(urllist[0]), "/")
-	if len(params) < 4 {
-		return false
-	}
+func AccessDecision(params []string, accesslist map[string]bool) bool {
 	if CheckAccess(params) {
 		s := fmt.Sprintf("%s/%s/%s", params[1], params[2], params[3])
-		if accesslist == nil {
+		if len(accesslist) < 1 {
 			return false
 		}
 		_, ok := accesslist[s]

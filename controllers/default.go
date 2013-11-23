@@ -2,6 +2,7 @@ package controllers
 
 import (
 	//"fmt"
+	"github.com/astaxie/beego"
 	"github.com/osgochina/admin/lib/rbac"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
@@ -25,6 +26,10 @@ type Attributes struct {
 }
 
 func (this *MainController) Index() {
+	userinfo := this.GetSession("userinfo")
+	if userinfo == nil {
+		this.Ctx.Redirect(302, beego.AppConfig.String("rbac_auth_gateway"))
+	}
 	if this.IsAjax() {
 		nodes, _ := m.GetNodeTree(0, 1)
 		tree := make([]Tree, len(nodes))
@@ -54,6 +59,8 @@ func (this *MainController) Login() {
 		user, err := rbac.CheckLogin(username, password)
 		if err == nil {
 			this.SetSession("userinfo", user)
+			accesslist, _ := rbac.GetAccessList(user.Id)
+			this.SetSession("accesslist", accesslist)
 			this.Rsp(true, "登录成功")
 		} else {
 			this.Rsp(false, err.Error())
