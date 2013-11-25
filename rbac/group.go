@@ -1,12 +1,11 @@
 package rbac
 
 import (
-	c "github.com/osgochina/admin/controllers"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
 type GroupController struct {
-	c.CommonController
+	CommonController
 }
 
 func (this *GroupController) Index() {

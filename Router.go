@@ -1,25 +1,14 @@
-package main
+package admin
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
-	//"github.com/astaxie/beego/orm"
-	"github.com/osgochina/admin/controllers"
-	"github.com/osgochina/admin/controllers/rbac"
-	"github.com/osgochina/admin/lib"
-	"github.com/osgochina/admin/models/rbacmodels"
-	"os"
+	"github.com/osgochina/admin/rbac"
 )
 
-func main() {
-
-	//orm.Debug = true
-	fmt.Println("Starting....")
-	//orm.RegisterDataBase("default", "mysql", "root:root@/admin?charset=utf8")
-	beego.Router("/", &controllers.MainController{}, "*:Index")
-	beego.Router("/public/index", &controllers.MainController{}, "*:Index")
-	beego.Router("/public/login", &controllers.MainController{}, "*:Login")
-	beego.Router("/public/logout", &controllers.MainController{}, "*:Logout")
+func router() {
+	beego.Router("/public/index", &rbac.MainController{}, "*:Index")
+	beego.Router("/public/login", &rbac.MainController{}, "*:Login")
+	beego.Router("/public/logout", &rbac.MainController{}, "*:Logout")
 
 	beego.Router("/rbac/user/AddUser", &rbac.UserController{}, "*:AddUser")
 	beego.Router("/rbac/user/UpdateUser", &rbac.UserController{}, "*:UpdateUser")
@@ -43,20 +32,4 @@ func main() {
 	beego.Router("/rbac/role/AddRoleToUser", &rbac.RoleController{}, "*:AddRoleToUser")
 	beego.Router("/rbac/role/Getlist", &rbac.RoleController{}, "*:Getlist")
 	beego.Router("/rbac/role/index", &rbac.RoleController{}, "*:Index")
-
-	fmt.Println("Start ok")
-	//判断初始化参数
-	initArgs()
-	beego.AddFuncMap("stringsToJson", lib.StringsToJson)
-	beego.Run()
-
-}
-
-func initArgs() {
-	args := os.Args
-	for _, v := range args {
-		if v == "-syncdb" {
-			rbacmodels.Syncdb()
-		}
-	}
 }

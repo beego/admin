@@ -3,14 +3,13 @@ package rbac
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/orm"
-	c "github.com/osgochina/admin/controllers"
 	m "github.com/osgochina/admin/models/rbacmodels"
 	"strconv"
 	"strings"
 )
 
 type RoleController struct {
-	c.CommonController
+	CommonController
 }
 
 func (this *RoleController) Index() {

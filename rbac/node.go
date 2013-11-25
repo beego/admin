@@ -3,12 +3,11 @@ package rbac
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/orm"
-	c "github.com/osgochina/admin/controllers"
 	m "github.com/osgochina/admin/models/rbacmodels"
 )
 
 type NodeController struct {
-	c.CommonController
+	CommonController
 }
 
 func (this *NodeController) Rsp(status bool, str string) {
