@@ -71,6 +71,7 @@ rbac_auth_gateway = /public/login
 
 最后还需要把js，css，image，tpl这些文件复制过来。
 ```bash
+$ cd $GOPATH/src/hello
 $ cp ../github.com/osgochina/admin/static ./static
 $ cp ../github.com/osgochina/admin/views ./views
 

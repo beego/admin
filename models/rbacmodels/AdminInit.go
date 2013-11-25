@@ -25,6 +25,7 @@ func Syncdb() {
 	insertGroup()
 	insertRole()
 	insertNodes()
+	fmt.Println("database init end")
 }
 
 func insertUser() {
