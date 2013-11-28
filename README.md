@@ -51,6 +51,7 @@ func main() {
 把以上信息配置成你自己数据库的信息。
 还有一部分权限系统需要配置的信息
 ```
+sessionon = true
 rbac_role_table = role
 rbac_node_table = node
 rbac_group_table = group
@@ -72,8 +73,8 @@ rbac_auth_gateway = /public/login
 最后还需要把js，css，image，tpl这些文件复制过来。
 ```bash
 $ cd $GOPATH/src/hello
-$ cp ../github.com/osgochina/admin/static ./static
-$ cp ../github.com/osgochina/admin/views ./views
+$ cp -R ../github.com/osgochina/admin/static ./
+$ cp -R ../github.com/osgochina/admin/views ./
 
 ```
 ###编译项目
@@ -87,4 +88,5 @@ $	go build
 $ ./hello -syncdb
 ```
 好了，现在可以通过浏览器地址访问了[`http://localhost:8080/public/index`](http://localhost:8080/public/index)
+默认得用户名密码都是admin
 
