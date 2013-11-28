@@ -16,7 +16,6 @@ var URL="/public"
                     success:function(r){
                         var r = $.parseJSON( r );
                         if(r.status){
-                        	vac.alert(r.info);
                             location.href = URL+"/index"
                         }else{
                             vac.alert(r.info);

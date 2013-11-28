@@ -114,7 +114,7 @@ var URL="/public"
                 iconCls:'icon-save',
                 handler:function(){
                     $("#form1").form('submit',{
-                        url:APP+'/Public/changePwd/isajax/1',
+                        url:URL+'/changepwd',
                         onSubmit:function(){
                             return $("#form1").form('validate');
                         },
@@ -122,7 +122,7 @@ var URL="/public"
                             var r = $.parseJSON( r );
                             if(r.status){
                                 $.messager.alert("提示", r.info,'info',function(){
-                                    location.href = APP+"/Public/logout";
+                                    location.href = URL+"/logout";
                                 });
                             }else{
                                 vac.alert(r.info);
@@ -183,7 +183,7 @@ var URL="/public"
         </volist>
     </ul>
     <div id="header-inner" style="float:right; overflow:hidden; height:80px; width:300px; line-height:25px; text-align:right; padding-right:20px;margin-top:-50px; ">
-        欢迎你！ Nikename<a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
+        欢迎你！ {{.userinfo.Nickname}} <a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
         <a href="/public/logout" target="_parent"> 退 出</a>
     </div>
 </div>
@@ -193,15 +193,15 @@ var URL="/public"
             <table>
                 <tr>
                     <td>旧密码</td>
-                    <td><input  name="oldpassword" class="easyui-validatebox"  required="true" validType="password[5,20]" missingMessage="请填写当前使用的密码"/></td>
+                    <td><input type="password"  name="oldpassword" class="easyui-validatebox"  required="true" validType="password[5,20]" missingMessage="请填写当前使用的密码"/></td>
                 </tr>
                 <tr>
                     <td>新密码：</td>
-                    <td><input name="newpassword" class="easyui-validatebox" required="true" validType="password[5,20]" missingMessage="请填写需要修改的密码"  /></td>
+                    <td><input type="password"  name="newpassword" class="easyui-validatebox" required="true" validType="password[5,20]" missingMessage="请填写需要修改的密码"  /></td>
                 </tr>
                 <tr>
                     <td>重复密码：</td>
-                    <td><input name="repeatpassword"  class="easyui-validatebox" required="true" validType="password[5,20]" missingMessage="请重复填写需要修改的密码" /></td>
+                    <td><input type="password"  name="repeatpassword"  class="easyui-validatebox" required="true" validType="password[5,20]" missingMessage="请重复填写需要修改的密码" /></td>
                 </tr>
             </table>
         </form>

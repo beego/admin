@@ -88,5 +88,6 @@ $	go build
 $ ./hello -syncdb
 ```
 好了，现在可以通过浏览器地址访问了[`http://localhost:8080/public/index`](http://localhost:8080/public/index)
+
 默认得用户名密码都是admin
 
