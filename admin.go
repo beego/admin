@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+const VERSION = "0.1.0"
+
 func Run() {
 	fmt.Println("Starting....")
 	router()
