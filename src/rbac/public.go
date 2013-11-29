@@ -3,8 +3,8 @@ package rbac
 import (
 	//"fmt"
 	"github.com/astaxie/beego"
-	"github.com/osgochina/admin/lib/rbac"
-	m "github.com/osgochina/admin/models/rbacmodels"
+	. "github.com/osgochina/admin/src"
+	m "github.com/osgochina/admin/src/models"
 )
 
 type MainController struct {
@@ -60,10 +60,10 @@ func (this *MainController) Login() {
 	if isajax == "1" {
 		username := this.GetString("username")
 		password := this.GetString("password")
-		user, err := rbac.CheckLogin(username, password)
+		user, err := CheckLogin(username, password)
 		if err == nil {
 			this.SetSession("userinfo", user)
-			accesslist, _ := rbac.GetAccessList(user.Id)
+			accesslist, _ := GetAccessList(user.Id)
 			this.SetSession("accesslist", accesslist)
 			this.Rsp(true, "登录成功")
 			return
@@ -98,7 +98,7 @@ func (this *MainController) Changepwd() {
 	if newpassword != repeatpassword {
 		this.Rsp(false, "两次输入密码不一致")
 	}
-	user, err := rbac.CheckLogin(userinfo.(m.User).Username, oldpassword)
+	user, err := CheckLogin(userinfo.(m.User).Username, oldpassword)
 	if err == nil {
 		var u m.User
 		u.Id = user.Id

@@ -1,12 +1,12 @@
-package rbac
+package src
 
 import (
 	"errors"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/osgochina/admin/lib"
-	m "github.com/osgochina/admin/models/rbacmodels"
+	. "github.com/osgochina/admin/src/lib"
+	m "github.com/osgochina/admin/src/models"
 	"strconv"
 	"strings"
 )
@@ -145,7 +145,7 @@ func CheckLogin(username string, password string) (user m.User, err error) {
 	if user.Id == 0 {
 		return user, errors.New("用户不存在")
 	}
-	if user.Password != lib.Pwdhash(password) {
+	if user.Password != Pwdhash(password) {
 		return user, errors.New("密码错误")
 	}
 	return user, nil

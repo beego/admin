@@ -2,10 +2,11 @@ package admin
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/osgochina/admin/rbac"
+	"github.com/osgochina/admin/src/rbac"
 )
 
 func router() {
+	beego.Router("/", &rbac.MainController{}, "*:Index")
 	beego.Router("/public/index", &rbac.MainController{}, "*:Index")
 	beego.Router("/public/login", &rbac.MainController{}, "*:Login")
 	beego.Router("/public/logout", &rbac.MainController{}, "*:Logout")

@@ -1,4 +1,4 @@
-package rbacmodels
+package models
 
 import (
 	"errors"

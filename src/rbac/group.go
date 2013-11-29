@@ -1,7 +1,7 @@
 package rbac
 
 import (
-	m "github.com/osgochina/admin/models/rbacmodels"
+	m "github.com/osgochina/admin/src/models"
 )
 
 type GroupController struct {

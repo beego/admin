@@ -3,8 +3,8 @@ package admin
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/osgochina/admin/lib"
-	"github.com/osgochina/admin/models/rbacmodels"
+	. "github.com/osgochina/admin/src/lib"
+	"github.com/osgochina/admin/src/models"
 	"os"
 )
 
@@ -13,14 +13,14 @@ func Run() {
 	router()
 	//判断初始化参数
 	initArgs()
-	beego.AddFuncMap("stringsToJson", lib.StringsToJson)
+	beego.AddFuncMap("stringsToJson", StringsToJson)
 	fmt.Println("Start ok")
 }
 func initArgs() {
 	args := os.Args
 	for _, v := range args {
 		if v == "-syncdb" {
-			rbacmodels.Syncdb()
+			models.Syncdb()
 		}
 	}
 }

@@ -1,9 +1,9 @@
-package rbacmodels
+package models
 
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
-	"github.com/osgochina/admin/lib"
+	. "github.com/osgochina/admin/src/lib"
 )
 
 var o orm.Ormer
@@ -33,7 +33,7 @@ func insertUser() {
 	u := new(User)
 	u.Username = "admin"
 	u.Nickname = "ClownFish"
-	u.Password = lib.Pwdhash("admin")
+	u.Password = Pwdhash("admin")
 	u.Email = "osgochina@gmail.com"
 	u.Remark = "I'm admin"
 	u.Status = 2
