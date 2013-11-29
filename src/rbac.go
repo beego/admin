@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+//check access and register user's nodes
 func AccessRegister() {
 	var Check = func(ctx *context.Context) {
 		user_auth_type, _ := strconv.Atoi(beego.AppConfig.String("user_auth_type"))
@@ -50,6 +51,7 @@ func AccessRegister() {
 	beego.AddFilter("*", "AfterStatic", Check)
 }
 
+//Determine whether need to verify
 func CheckAccess(params []string) bool {
 	if len(params) < 3 {
 		return false
@@ -62,6 +64,7 @@ func CheckAccess(params []string) bool {
 	return true
 }
 
+//To test whether permissions
 func AccessDecision(params []string, accesslist map[string]bool) bool {
 	if CheckAccess(params) {
 		s := fmt.Sprintf("%s/%s/%s", params[1], params[2], params[3])
@@ -84,6 +87,7 @@ type AccessNode struct {
 	Childrens []*AccessNode
 }
 
+//Access permissions list
 func GetAccessList(uid int64) (map[string]bool, error) {
 	list, err := m.AccessList(uid)
 	if err != nil {
@@ -140,6 +144,7 @@ func GetAccessList(uid int64) (map[string]bool, error) {
 	return accesslist, nil
 }
 
+//check login
 func CheckLogin(username string, password string) (user m.User, err error) {
 	user = m.GetUserByUsername(username)
 	if user.Id == 0 {
