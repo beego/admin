@@ -5,7 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
-	. "github.com/osgochina/admin/src/lib"
+	. "github.com/beego/admin/src/lib"
 	"log"
 	"time"
 )

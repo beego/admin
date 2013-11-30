@@ -3,8 +3,8 @@ package rbac
 import (
 	//"fmt"
 	"github.com/astaxie/beego"
-	. "github.com/osgochina/admin/src"
-	m "github.com/osgochina/admin/src/models"
+	. "github.com/beego/admin/src"
+	m "github.com/beego/admin/src/models"
 )
 
 type MainController struct {

@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
-	. "github.com/osgochina/admin/src/lib"
+	. "github.com/beego/admin/src/lib"
 )
 
 var o orm.Ormer

@@ -3,8 +3,8 @@ package admin
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	. "github.com/osgochina/admin/src/lib"
-	"github.com/osgochina/admin/src/models"
+	. "github.com/beego/admin/src/lib"
+	"github.com/beego/admin/src/models"
 	"os"
 )
 

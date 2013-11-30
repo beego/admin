@@ -3,7 +3,7 @@ package rbac
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/orm"
-	m "github.com/osgochina/admin/src/models"
+	m "github.com/beego/admin/src/models"
 )
 
 type NodeController struct {

@@ -9,7 +9,7 @@ VERSION = "0.1.0"
 
 执行以下命令，就能够在你的GOPATH/src 目录下发现beego admin
 ```bash
-$ go get github.com/osgochina/admin
+$ go get github.com/beego/admin
 ```
 
 ##初次使用
@@ -23,7 +23,7 @@ $ bee new hello
 现在开始可以使用它了。
 ```go
 import (
-	"github.com/osgochina/admin"
+	"github.com/beego/admin"
 )
 ```
 引入admin代码，再main函数中使用它
@@ -73,8 +73,8 @@ rbac_auth_gateway = /public/login
 最后还需要把js，css，image，tpl这些文件复制过来。
 ```bash
 $ cd $GOPATH/src/hello
-$ cp -R ../github.com/osgochina/admin/static ./
-$ cp -R ../github.com/osgochina/admin/views ./
+$ cp -R ../github.com/beego/admin/static ./
+$ cp -R ../github.com/beego/admin/views ./
 
 ```
 ###编译项目

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	. "github.com/osgochina/admin/src/lib"
-	m "github.com/osgochina/admin/src/models"
+	. "github.com/beego/admin/src/lib"
+	m "github.com/beego/admin/src/models"
 	"strconv"
 	"strings"
 )

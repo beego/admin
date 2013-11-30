@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	. "github.com/osgochina/admin/src"
+	. "github.com/beego/admin/src"
 )
 
 type CommonController struct {

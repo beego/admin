@@ -2,7 +2,7 @@ package admin
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/osgochina/admin/src/rbac"
+	"github.com/beego/admin/src/rbac"
 )
 
 func router() {
