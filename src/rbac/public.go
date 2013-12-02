@@ -49,7 +49,9 @@ func (this *MainController) Index() {
 		this.ServeJson()
 		return
 	} else {
+		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
+		this.Data["groups"] = groups
 		this.TplNames = "easyui/public/index.tpl"
 	}
 }

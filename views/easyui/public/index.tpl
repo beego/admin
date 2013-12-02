@@ -178,9 +178,9 @@ var URL="/public"
         <h2>BeegoAdmin</h2>
     </div>
     <ul class="ht_nav">
-        <volist name="grouplist" id="vo">
-            <li><span><a class="current"  href="#" onClick="selectgroup({$vo.id});$('.ht_nav li a').removeClass('current');$(this).addClass('current')"></a></span></li>
-        </volist>
+        {{range .groups}}
+            <li><span><a class="current"  href="#" onClick="selectgroup({{.Id}});$('.ht_nav li a').removeClass('current');$(this).addClass('current')">{{.Title}}</a></span></li>
+        {{end}}
     </ul>
     <div id="header-inner" style="float:right; overflow:hidden; height:80px; width:300px; line-height:25px; text-align:right; padding-right:20px;margin-top:-50px; ">
         欢迎你！ {{.userinfo.Nickname}} <a href="javascript:void(0);" onclick="modifypassword()"> 修改密码</a>
