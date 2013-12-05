@@ -33,7 +33,7 @@ func (this *RoleController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		this.TplNames = "easyui/rbac/role.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/role.tpl"
 	}
 
 }
@@ -113,7 +113,7 @@ func (this *RoleController) AccessToNode() {
 		b, _ := json.Marshal(grouplist)
 		this.Data["grouplist"] = string(b)
 		this.Data["roleid"] = roleid
-		this.TplNames = "easyui/rbac/accesstonode.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/accesstonode.tpl"
 	}
 
 }
@@ -158,7 +158,7 @@ func (this *RoleController) RoleToUserList() {
 		return
 	} else {
 		this.Data["roleid"] = roleid
-		this.TplNames = "easyui/rbac/roletouserlist.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/roletouserlist.tpl"
 	}
 }
 

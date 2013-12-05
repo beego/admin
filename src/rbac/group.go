@@ -26,7 +26,7 @@ func (this *GroupController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		this.TplNames = "easyui/rbac/group.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/group.tpl"
 	}
 
 }

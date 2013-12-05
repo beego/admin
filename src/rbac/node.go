@@ -46,7 +46,7 @@ func (this *NodeController) Index() {
 		grouplist := m.GroupList()
 		b, _ := json.Marshal(grouplist)
 		this.Data["grouplist"] = string(b)
-		this.TplNames = "easyui/rbac/node.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/node.tpl"
 	}
 
 }

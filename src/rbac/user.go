@@ -26,7 +26,7 @@ func (this *UserController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		this.TplNames = "easyui/rbac/user.tpl"
+		this.TplNames = this.GetTemplatetype() + "/rbac/user.tpl"
 	}
 
 }

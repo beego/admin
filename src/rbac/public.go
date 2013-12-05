@@ -52,7 +52,7 @@ func (this *MainController) Index() {
 		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
 		this.Data["groups"] = groups
-		this.TplNames = "easyui/public/index.tpl"
+		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
 	}
 }
 
@@ -79,7 +79,7 @@ func (this *MainController) Login() {
 	if userinfo != nil {
 		this.Ctx.Redirect(302, "/public/index")
 	}
-	this.TplNames = "easyui/public/login.tpl"
+	this.TplNames = this.GetTemplatetype() + "/public/login.tpl"
 }
 
 //退出

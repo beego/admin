@@ -46,7 +46,7 @@ func insertGroup() {
 	fmt.Println("insert group ...")
 	g := new(Group)
 	g.Name = "APP"
-	g.Title = "Admin"
+	g.Title = "控制中心"
 	g.Sort = 1
 	g.Status = 2
 	o.Insert(g)
