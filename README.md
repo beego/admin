@@ -23,8 +23,11 @@ $ bee new hello
 现在开始可以使用它了。
 ```go
 import (
-	"github.com/beego/admin"
+	"hello/controllers" 		//自身业务包
+	"github.com/astaxie/beego"  //beego 包
+	"github.com/beego/admin"  //admin 包
 )
+
 ```
 引入admin代码，再main函数中使用它
 ```go
