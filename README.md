@@ -39,9 +39,9 @@ func main() {
 ```
 ###配置文件
 
-第一次使用的时候需要创建一个数据库，目前仅支持mysql,创建数据库的时候需要设置为utf8编码。
+数据库目前仅支持mysql,后续会添加更多的数据库支持。
 
-创建了一个utf8字符格式的mysql数据库以后，需要去hello/conf/app.conf中配置
+数据库的配置信息需要填写，程序会根据配置自动建库
 数据库链接信息
 ```
 	db_host = localhost
@@ -86,11 +86,11 @@ $ cp -R ../github.com/beego/admin/views ./
 ```
 $	go build
 ```
-首次启动需要初始化数据库表。
+首次启动需要创建数据库、初始化数据库表。
 ```bash
 $ ./hello -syncdb
 ```
-好了，现在可以通过浏览器地址访问了[`http://localhost:8080/public/index`](http://localhost:8080/public/index)
+好了，现在可以通过浏览器地址访问了[`http://localhost:8080/`](http://localhost:8080/)
 
 默认得用户名密码都是admin
 
