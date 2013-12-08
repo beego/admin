@@ -12,20 +12,29 @@ import (
 const VERSION = "0.1.0"
 
 func Run() {
-	mime.AddExtensionType(".css", "text/css")
+	//初始化
+	initialize()
 
 	fmt.Println("Starting....")
-	router()
+
+	fmt.Println("Start ok")
+}
+func initialize() {
+	mime.AddExtensionType(".css", "text/css")
 	//判断初始化参数
 	initArgs()
+
+	models.Connect()
+
+	router()
 	beego.AddFuncMap("stringsToJson", StringsToJson)
-	fmt.Println("Start ok")
 }
 func initArgs() {
 	args := os.Args
 	for _, v := range args {
 		if v == "-syncdb" {
 			models.Syncdb()
+			os.Exit(0)
 		}
 	}
 }

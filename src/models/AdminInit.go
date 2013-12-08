@@ -1,14 +1,20 @@
 package models
 
 import (
+	"database/sql"
 	"fmt"
+
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	. "github.com/beego/admin/src/lib"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var o orm.Ormer
 
 func Syncdb() {
+	createdb()
+	Connect()
 	o = orm.NewOrm()
 	// 数据库别名
 	name := "default"
@@ -25,7 +31,56 @@ func Syncdb() {
 	insertGroup()
 	insertRole()
 	insertNodes()
-	fmt.Println("database init is complete.")
+	fmt.Println("database init is complete.Please restart the application")
+
+}
+
+//数据库连接
+func Connect() {
+	var dns string
+	db_type := beego.AppConfig.String("db_type")
+	db_host := beego.AppConfig.String("db_host")
+	db_port := beego.AppConfig.String("db_port")
+	db_user := beego.AppConfig.String("db_user")
+	db_pass := beego.AppConfig.String("db_pass")
+	db_name := beego.AppConfig.String("db_name")
+	db_sslmode := beego.AppConfig.String("db_sslmode")
+	switch db_type {
+	case "mysql":
+		orm.RegisterDriver("mysql", orm.DR_MySQL)
+		dns = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", db_user, db_pass, db_host, db_port, db_name)
+		break
+	case "postgres":
+		orm.RegisterDriver("postgres", orm.DR_Postgres)
+		dns = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_name, db_host, db_user, db_pass, db_port, db_sslmode)
+	default:
+		beego.Critical("Database driver is not allowed:", db_type)
+	}
+	orm.RegisterDataBase("default", db_type, dns)
+}
+
+//创建数据库
+func createdb() {
+	db_type := beego.AppConfig.String("db_type")
+	db_host := beego.AppConfig.String("db_host")
+	db_port := beego.AppConfig.String("db_port")
+	db_user := beego.AppConfig.String("db_user")
+	db_pass := beego.AppConfig.String("db_pass")
+	db_name := beego.AppConfig.String("db_name")
+
+	switch db_type {
+	case "mysql":
+		db, err := sql.Open(db_type, fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", db_user, db_pass, db_host, db_port))
+		if err != nil {
+			panic(err.Error())
+		}
+		db.Prepare(fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name))
+		defer db.Close()
+		break
+	default:
+		beego.Critical("Database driver is not allowed:", db_type)
+	}
+
 }
 
 func insertUser() {
