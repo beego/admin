@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"log"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -74,7 +75,14 @@ func createdb() {
 		if err != nil {
 			panic(err.Error())
 		}
-		db.Prepare(fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name))
+		r, err := db.Exec(fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name))
+		if err != nil {
+			log.Println(err)
+			log.Println(r)
+		} else {
+			log.Println("Database ", db_name, " created")
+		}
+
 		defer db.Close()
 		break
 	default:
@@ -101,7 +109,7 @@ func insertGroup() {
 	fmt.Println("insert group ...")
 	g := new(Group)
 	g.Name = "APP"
-	g.Title = "控制中心"
+	g.Title = "System"
 	g.Sort = 1
 	g.Status = 2
 	o.Insert(g)
