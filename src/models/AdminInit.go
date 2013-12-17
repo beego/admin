@@ -8,7 +8,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	. "github.com/beego/admin/src/lib"
-	_ "github.com/go-sql-driver/mysql"
+	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 var o orm.Ormer
@@ -84,6 +85,8 @@ func createdb() {
 		}
 
 		defer db.Close()
+		break
+	case "postgres":
 		break
 	default:
 		beego.Critical("Database driver is not allowed:", db_type)
