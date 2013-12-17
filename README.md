@@ -39,17 +39,27 @@ func main() {
 ```
 ###配置文件
 
-数据库目前仅支持mysql,后续会添加更多的数据库支持。
+数据库目前仅支持mysql,postgresql,后续会添加更多的数据库支持。
 
 数据库的配置信息需要填写，程序会根据配置自动建库
-数据库链接信息
+mysql数据库链接信息
 ```
-	db_host = localhost
-	db_port = 3306
-	db_user = root
-	db_pass = root
-	db_name = admin
-	db_type = mysql
+db_host = localhost
+db_port = 3306
+db_user = root
+db_pass = root
+db_name = admin
+db_type = mysql
+```
+postgresql数据库链接信息
+```
+db_host = localhost
+db_port = 5432
+db_user = postgres
+db_pass = postgres
+db_name = admin
+db_type = postgres
+db_sslmode=disable
 ```
 把以上信息配置成你自己数据库的信息。
 还有一部分权限系统需要配置的信息

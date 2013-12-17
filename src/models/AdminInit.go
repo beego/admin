@@ -69,28 +69,34 @@ func createdb() {
 	db_user := beego.AppConfig.String("db_user")
 	db_pass := beego.AppConfig.String("db_pass")
 	db_name := beego.AppConfig.String("db_name")
+	db_sslmode := beego.AppConfig.String("db_sslmode")
 
+	var dns string
+	var sqlstring string
 	switch db_type {
 	case "mysql":
-		db, err := sql.Open(db_type, fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", db_user, db_pass, db_host, db_port))
-		if err != nil {
-			panic(err.Error())
-		}
-		r, err := db.Exec(fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name))
-		if err != nil {
-			log.Println(err)
-			log.Println(r)
-		} else {
-			log.Println("Database ", db_name, " created")
-		}
-
-		defer db.Close()
+		dns = fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", db_user, db_pass, db_host, db_port)
+		sqlstring = fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name)
 		break
 	case "postgres":
+		dns = fmt.Sprintf("host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_host, db_user, db_pass, db_port, db_sslmode)
+		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
 		break
 	default:
 		beego.Critical("Database driver is not allowed:", db_type)
 	}
+	db, err := sql.Open(db_type, dns)
+	if err != nil {
+		panic(err.Error())
+	}
+	r, err := db.Exec(sqlstring)
+	if err != nil {
+		log.Println(err)
+		log.Println(r)
+	} else {
+		log.Println("Database ", db_name, " created")
+	}
+	defer db.Close()
 
 }
 

@@ -129,7 +129,7 @@ func GetNodelistByGroupid(Groupid int64) (nodes []orm.Params, count int64) {
 
 func GetNodeTree(pid int64, level int64) ([]orm.Params, error) {
 	o := orm.NewOrm()
-	var node Node
+	node := new(Node)
 	var nodes []orm.Params
 	_, err := o.QueryTable(node).Filter("Pid", pid).Filter("Level", level).Filter("Status", 2).Values(&nodes)
 	if err != nil {
