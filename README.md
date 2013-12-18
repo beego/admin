@@ -39,7 +39,7 @@ func main() {
 ```
 ###配置文件
 
-数据库目前仅支持mysql,postgresql,后续会添加更多的数据库支持。
+数据库目前仅支持mysql,postgresql,sqlite3,后续会添加更多的数据库支持。
 
 数据库的配置信息需要填写，程序会根据配置自动建库
 mysql数据库链接信息
@@ -61,7 +61,15 @@ db_name = admin
 db_type = postgres
 db_sslmode=disable
 ```
+sqlite3数据库链接信息
+```
+###db_path 是指数据库保存的路径，默认是在项目的根目录
+db_path = ./
+db_name = admin
+db_type = sqlite3
+```
 把以上信息配置成你自己数据库的信息。
+
 还有一部分权限系统需要配置的信息
 ```
 sessionon = true

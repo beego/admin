@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	. "github.com/beego/admin/src/lib"
-	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var o orm.Ormer
@@ -46,6 +48,7 @@ func Connect() {
 	db_user := beego.AppConfig.String("db_user")
 	db_pass := beego.AppConfig.String("db_pass")
 	db_name := beego.AppConfig.String("db_name")
+	db_path := beego.AppConfig.String("db_path")
 	db_sslmode := beego.AppConfig.String("db_sslmode")
 	switch db_type {
 	case "mysql":
@@ -55,6 +58,13 @@ func Connect() {
 	case "postgres":
 		orm.RegisterDriver("postgres", orm.DR_Postgres)
 		dns = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_name, db_host, db_user, db_pass, db_port, db_sslmode)
+	case "sqlite3":
+		orm.RegisterDriver("sqlite3", orm.DR_Sqlite)
+		if db_path == "" {
+			db_path = "./"
+		}
+		dns = fmt.Sprintf("%s%s.db", db_path, db_name)
+		break
 	default:
 		beego.Critical("Database driver is not allowed:", db_type)
 	}
@@ -63,12 +73,14 @@ func Connect() {
 
 //创建数据库
 func createdb() {
+
 	db_type := beego.AppConfig.String("db_type")
 	db_host := beego.AppConfig.String("db_host")
 	db_port := beego.AppConfig.String("db_port")
 	db_user := beego.AppConfig.String("db_user")
 	db_pass := beego.AppConfig.String("db_pass")
 	db_name := beego.AppConfig.String("db_name")
+	db_path := beego.AppConfig.String("db_path")
 	db_sslmode := beego.AppConfig.String("db_sslmode")
 
 	var dns string
@@ -81,6 +93,14 @@ func createdb() {
 	case "postgres":
 		dns = fmt.Sprintf("host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_host, db_user, db_pass, db_port, db_sslmode)
 		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
+		break
+	case "sqlite3":
+		if db_path == "" {
+			db_path = "./"
+		}
+		dns = fmt.Sprintf("%s%s.db", db_path, db_name)
+		os.Remove(dns)
+		sqlstring = "create table init (n varchar(32));drop table init;"
 		break
 	default:
 		beego.Critical("Database driver is not allowed:", db_type)
