@@ -2,7 +2,7 @@
 
 基于beego，jquery easyui ,bootstarp的一个后台管理系统
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 ## 获取安装
 
