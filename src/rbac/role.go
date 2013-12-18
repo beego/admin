@@ -2,10 +2,11 @@ package rbac
 
 import (
 	"encoding/json"
-	"github.com/astaxie/beego/orm"
-	m "github.com/beego/admin/src/models"
 	"strconv"
 	"strings"
+
+	"github.com/astaxie/beego/orm"
+	m "github.com/beego/admin/src/models"
 )
 
 type RoleController struct {

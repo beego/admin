@@ -2,11 +2,12 @@ package admin
 
 import (
 	"fmt"
+	"mime"
+	"os"
+
 	"github.com/astaxie/beego"
 	. "github.com/beego/admin/src/lib"
 	"github.com/beego/admin/src/models"
-	"mime"
-	"os"
 )
 
 const VERSION = "0.1.0"

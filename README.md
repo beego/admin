@@ -1,5 +1,4 @@
 ## beego admin
-=====
 
 基于beego，jquery easyui ,bootstarp的一个后台管理系统
 
@@ -80,7 +79,7 @@ rbac_user_table = user
 #admin用户名 此用户登录不用认证
 rbac_admin_user = admin
 
-#默认需要认证模块
+#默认不需要认证模块
 not_auth_package = public,static
 #默认认证类型 0 不认证 1 登录认证 2 实时认证
 user_auth_type = 1

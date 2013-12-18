@@ -2,10 +2,11 @@ package models
 
 import (
 	"errors"
+	"log"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
-	"log"
 )
 
 //分组表
