@@ -3,12 +3,13 @@ package src
 import (
 	"errors"
 	"fmt"
+	"strconv"
+	"strings"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	. "github.com/beego/admin/src/lib"
 	m "github.com/beego/admin/src/models"
-	"strconv"
-	"strings"
 )
 
 //check access and register user's nodes

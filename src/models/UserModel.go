@@ -2,12 +2,13 @@ package models
 
 import (
 	"errors"
+	"log"
+	"time"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 	. "github.com/beego/admin/src/lib"
-	"log"
-	"time"
 )
 
 //用户表
