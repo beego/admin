@@ -53,6 +53,9 @@ func (this *MainController) Index() {
 		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
 		this.Data["groups"] = groups
+		if this.GetTemplatetype() != "easyui"{
+			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
+		}
 		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
 	}
 }

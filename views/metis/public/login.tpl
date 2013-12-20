@@ -1,4 +1,14 @@
-{{template "../public/header.tpl"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <meta name="msapplication-TileColor" content="#5bc0de" />
+    <meta name="msapplication-TileImage" content="/static/metis/img/metis-tile.png" />
+    <link rel="stylesheet" href="/static/metis/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/metis/css/main.css">
+    <link rel="stylesheet" href="/static/metis/lib/magic/magic.css">
+  </head>
   <body class="login">
     <div class="container">
       <div class="text-center">
@@ -6,12 +16,12 @@
       </div>
       <div class="tab-content">
         <div id="login" class="tab-pane active">
-          <form action="index.html" class="form-signin">
+          <form action="/public/login" class="form-signin" onsubmit="return login()">
             <p class="text-muted text-center">
               Enter your username and password
             </p>
-            <input type="text" placeholder="Username" class="form-control">
-            <input type="password" placeholder="Password" class="form-control">
+            <input id="username" name="username" type="text" placeholder="Username" required="required" class="form-control">
+            <input id="password" name="password" type="password" placeholder="Password" required="required" class="form-control">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
           </form>
         </div>
@@ -52,6 +62,23 @@
           $(activeForm).removeClass('magictime swap');
         }, 1000);
       });
+      function login () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+          url:"/public/login?isajax=1",
+          type:"POST",
+          data:{username:username,password:password},
+          success:function(r){
+            if(r.status){
+              location.href = "/public/index"
+            }else{
+              alert(r.info)
+            }
+          }
+        });
+        return false;
+      }
     </script>
   </body>
 </html>

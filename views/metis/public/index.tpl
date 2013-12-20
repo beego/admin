@@ -1,0 +1,1 @@
+Wecome to beego admin
