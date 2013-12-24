@@ -2,7 +2,6 @@ package rbac
 
 import (
 	//"fmt"
-
 	"github.com/astaxie/beego"
 	. "github.com/beego/admin/src"
 	m "github.com/beego/admin/src/models"
@@ -32,20 +31,22 @@ func (this *MainController) Index() {
 	if userinfo == nil {
 		this.Ctx.Redirect(302, beego.AppConfig.String("rbac_auth_gateway"))
 	}
-	if this.IsAjax() {
-		nodes, _ := m.GetNodeTree(0, 1)
-		tree := make([]Tree, len(nodes))
-		for k, v := range nodes {
-			tree[k].Id = v["Id"].(int64)
-			tree[k].Text = v["Title"].(string)
-			children, _ := m.GetNodeTree(v["Id"].(int64), 2)
-			tree[k].Children = make([]Tree, len(children))
-			for k1, v1 := range children {
-				tree[k].Children[k1].Id = v1["Id"].(int64)
-				tree[k].Children[k1].Text = v1["Title"].(string)
-				tree[k].Children[k1].Attributes.Url = "/" + v["Name"].(string) + "/" + v1["Name"].(string)
-			}
+
+	nodes, _ := m.GetNodeTree(0, 1)
+	tree := make([]Tree, len(nodes))
+	for k, v := range nodes {
+		tree[k].Id = v["Id"].(int64)
+		tree[k].Text = v["Title"].(string)
+		children, _ := m.GetNodeTree(v["Id"].(int64), 2)
+		tree[k].Children = make([]Tree, len(children))
+		for k1, v1 := range children {
+			tree[k].Children[k1].Id = v1["Id"].(int64)
+			tree[k].Children[k1].Text = v1["Title"].(string)
+			tree[k].Children[k1].Attributes.Url = "/" + v["Name"].(string) + "/" + v1["Name"].(string)
 		}
+	}
+	if this.IsAjax() {
+		
 		this.Data["json"] = &tree
 		this.ServeJson()
 		return
@@ -53,6 +54,7 @@ func (this *MainController) Index() {
 		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
 		this.Data["groups"] = groups
+		this.Data["tree"] = &tree
 		if this.GetTemplatetype() != "easyui"{
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}

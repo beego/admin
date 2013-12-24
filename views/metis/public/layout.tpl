@@ -9,7 +9,7 @@
       {{template "../public/top.tpl"}}
       <!-- /#top -->
       <!-- #left-->
-      {{template "../public/left.tpl"}}
+      {{template "../public/left.tpl" .}}
       <!-- /#left -->
       <div id="content">
         <div class="outer">

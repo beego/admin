@@ -1,25 +1,19 @@
 <div id="left">
   <!-- #menu -->
   <ul id="menu" class="collapse">
-    <li>
+    <li class="active">
       <a href="javascript:;">菜单<span class="fa arrow"></span> </a>
       <ul>
-        <li>
-          <a href="javascript:;">Level 1  <span class="fa arrow"></span> </a>
-          <ul>
-            <li> <a href="javascript:;">Level 2</a> </li>
-            <li> <a href="javascript:;">Level 2</a> </li>
-            <li> <a href="javascript:;">Level 2</a> </li>
+      {{range $key,$val:=.tree}}
+        <li class="active">
+          <a href="javascript:;">{{$val.Text}}<span class="fa arrow"></span> </a>
+          <ul class="in" style="height: auto;">
+          {{range $k,$v:=$val.Children}}
+            <li> <a href="{{$v.Attributes.Url}}">{{$v.Text}}</a> </li>
+          {{end}}
           </ul>
         </li>
-        <li>
-          <a href="javascript:;">Level 1  <span class="fa arrow"></span> </a>
-          <ul>
-            <li> <a href="javascript:;">Level 2</a> </li>
-            <li> <a href="javascript:;">Level 2</a> </li>
-            <li> <a href="javascript:;">Level 2</a> </li>
-          </ul>
-        </li>
+        {{end}}
       </ul>
     </li>
   </ul><!-- /#menu -->

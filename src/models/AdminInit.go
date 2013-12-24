@@ -35,7 +35,7 @@ func Syncdb() {
 	insertGroup()
 	insertRole()
 	insertNodes()
-	fmt.Println("database init is complete.Please restart the application")
+	fmt.Println("database init is complete.\nPlease restart the application")
 
 }
 
