@@ -9,23 +9,29 @@ type UserController struct {
 }
 
 func (this *UserController) Index() {
-	if this.IsAjax() {
-		page, _ := this.GetInt("page")
-		page_size, _ := this.GetInt("rows")
-		sort := this.GetString("sort")
-		order := this.GetString("order")
-		if len(order) > 0 {
-			if order == "desc" {
-				sort = "-" + sort
-			}
-		} else {
-			sort = "Id"
+	page, _ := this.GetInt("page")
+	page_size, _ := this.GetInt("rows")
+	sort := this.GetString("sort")
+	order := this.GetString("order")
+	if len(order) > 0 {
+		if order == "desc" {
+			sort = "-" + sort
 		}
-		users, count := m.Getuserlist(page, page_size, sort)
+	} else {
+		sort = "Id"
+	}
+	users, count := m.Getuserlist(page, page_size, sort)
+	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
 		this.ServeJson()
 		return
 	} else {
+		tree:=this.GetTree()
+		this.Data["tree"] = &tree
+		this.Data["users"] = &users
+		if this.GetTemplatetype() != "easyui"{
+			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
+		}
 		this.TplNames = this.GetTemplatetype() + "/rbac/user.tpl"
 	}
 
