@@ -85,6 +85,8 @@ not_auth_package = public,static
 user_auth_type = 1
 #默认登录网关
 rbac_auth_gateway = /public/login
+#默认模版
+template_type=easyui
 ```
 以上配置信息都需要加入到app.conf文件中。
 
