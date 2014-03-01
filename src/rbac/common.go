@@ -24,7 +24,7 @@ func (this *CommonController) GetTemplatetype() string {
 	return templatetype
 }
 
-func (this *CommonController) GetTree() []Tree{
+func (this *CommonController) GetTree() []Tree {
 	nodes, _ := m.GetNodeTree(0, 1)
 	tree := make([]Tree, len(nodes))
 	for k, v := range nodes {
