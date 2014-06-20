@@ -49,7 +49,7 @@ func AccessRegister() {
 
 		}
 	}
-	beego.AddFilter("*", "AfterStatic", Check)
+	beego.InsertFilter("/*", beego.BeforeRouter, Check)
 }
 
 //Determine whether need to verify
