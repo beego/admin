@@ -30,7 +30,7 @@ import (
 ```
 引入admin代码，再init函数中使用它
 ```go
-func main() {
+func init() {
 	admin.Run()
 	beego.Router("/", &controllers.MainController{})
 }
