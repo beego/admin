@@ -19,7 +19,7 @@ $ go get github.com/beego/admin
 $ bee new hello
 ```
 创建成功以后，你能得到一个名叫hello的应用程序，
-现在开始可以使用它了。
+现在开始可以使用它了。找到到刚刚新建的程序hello/routers/router.go这个文件
 ```go
 import (
 	"hello/controllers" 		//自身业务包
@@ -28,12 +28,11 @@ import (
 )
 
 ```
-引入admin代码，再main函数中使用它
+引入admin代码，再init函数中使用它
 ```go
 func main() {
 	admin.Run()
 	beego.Router("/", &controllers.MainController{})
-	beego.Run()
 }
 ```
 ###配置文件

@@ -10,7 +10,7 @@ import (
 	"github.com/beego/admin/src/models"
 )
 
-const VERSION = "0.1.0"
+const VERSION = "0.1.1"
 
 func Run() {
 	//初始化
