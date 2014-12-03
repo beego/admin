@@ -18,8 +18,8 @@ func (this *NodeController) Rsp(status bool, str string) {
 
 func (this *NodeController) Index() {
 	if this.IsAjax() {
-		page, _ := this.GetInt("page")
-		page_size, _ := this.GetInt("rows")
+		page, _ := this.GetInt64("page")
+		page_size, _ := this.GetInt64("rows")
 		sort := this.GetString("sort")
 		order := this.GetString("order")
 		if len(order) > 0 {
@@ -60,11 +60,11 @@ func (this *NodeController) AddAndEdit() {
 	}
 	var id int64
 	var err error
-	Nid, _ := this.GetInt("Id")
+	Nid, _ := this.GetInt64("Id")
 	if Nid > 0 {
 		id, err = m.UpdateNode(&n)
 	} else {
-		group_id, _ := this.GetInt("Group_id")
+		group_id, _ := this.GetInt64("Group_id")
 		group := new(m.Group)
 		group.Id = group_id
 		n.Group = group
@@ -87,7 +87,7 @@ func (this *NodeController) AddAndEdit() {
 }
 
 func (this *NodeController) DelNode() {
-	Id, _ := this.GetInt("Id")
+	Id, _ := this.GetInt64("Id")
 	status, err := m.DelNodeById(Id)
 	if err == nil && status > 0 {
 		this.Rsp(true, "Success")

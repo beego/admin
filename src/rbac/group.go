@@ -10,8 +10,8 @@ type GroupController struct {
 
 func (this *GroupController) Index() {
 	if this.IsAjax() {
-		page, _ := this.GetInt("page")
-		page_size, _ := this.GetInt("rows")
+		page, _ := this.GetInt64("page")
+		page_size, _ := this.GetInt64("rows")
 		sort := this.GetString("sort")
 		order := this.GetString("order")
 		if len(order) > 0 {
@@ -67,7 +67,7 @@ func (this *GroupController) UpdateGroup() {
 }
 
 func (this *GroupController) DelGroup() {
-	Id, _ := this.GetInt("Id")
+	Id, _ := this.GetInt64("Id")
 	status, err := m.DelGroupById(Id)
 	if err == nil && status > 0 {
 		this.Rsp(true, "Success")

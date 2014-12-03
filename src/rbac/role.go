@@ -15,8 +15,8 @@ type RoleController struct {
 
 func (this *RoleController) Index() {
 	if this.IsAjax() {
-		page, _ := this.GetInt("page")
-		page_size, _ := this.GetInt("rows")
+		page, _ := this.GetInt64("page")
+		page_size, _ := this.GetInt64("rows")
 		sort := this.GetString("sort")
 		order := this.GetString("order")
 		if len(order) > 0 {
@@ -47,7 +47,7 @@ func (this *RoleController) AddAndEdit() {
 	}
 	var id int64
 	var err error
-	Rid, _ := this.GetInt("Id")
+	Rid, _ := this.GetInt64("Id")
 	if Rid > 0 {
 		id, err = m.UpdateRole(&r)
 	} else {
@@ -64,7 +64,7 @@ func (this *RoleController) AddAndEdit() {
 }
 
 func (this *RoleController) DelRole() {
-	Id, _ := this.GetInt("Id")
+	Id, _ := this.GetInt64("Id")
 	status, err := m.DelRoleById(Id)
 	if err == nil && status > 0 {
 		this.Rsp(true, "Success")
@@ -86,9 +86,9 @@ func (this *RoleController) Getlist() {
 }
 
 func (this *RoleController) AccessToNode() {
-	roleid, _ := this.GetInt("Id")
+	roleid, _ := this.GetInt64("Id")
 	if this.IsAjax() {
-		groupid, _ := this.GetInt("group_id")
+		groupid, _ := this.GetInt64("group_id")
 		nodes, count := m.GetNodelistByGroupid(groupid)
 		list, _ := m.GetNodelistByRoleId(roleid)
 		for i := 0; i < len(nodes); i++ {
@@ -120,8 +120,8 @@ func (this *RoleController) AccessToNode() {
 }
 
 func (this *RoleController) AddAccess() {
-	roleid, _ := this.GetInt("roleid")
-	group_id, _ := this.GetInt("group_id")
+	roleid, _ := this.GetInt64("roleid")
+	group_id, _ := this.GetInt64("group_id")
 	err := m.DelGroupNode(roleid, group_id)
 	if err != nil {
 		this.Rsp(false, err.Error())
@@ -140,7 +140,7 @@ func (this *RoleController) AddAccess() {
 }
 
 func (this *RoleController) RoleToUserList() {
-	roleid, _ := this.GetInt("Id")
+	roleid, _ := this.GetInt64("Id")
 	if this.IsAjax() {
 		users, count := m.Getuserlist(1, 1000, "Id")
 		list, _ := m.GetUserByRoleId(roleid)
@@ -164,7 +164,7 @@ func (this *RoleController) RoleToUserList() {
 }
 
 func (this *RoleController) AddRoleToUser() {
-	roleid, _ := this.GetInt("Id")
+	roleid, _ := this.GetInt64("Id")
 	ids := this.GetString("ids")
 	userids := strings.Split(ids, ",")
 	err := m.DelUserRole(roleid)

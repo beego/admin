@@ -9,8 +9,8 @@ type UserController struct {
 }
 
 func (this *UserController) Index() {
-	page, _ := this.GetInt("page")
-	page_size, _ := this.GetInt("rows")
+	page, _ := this.GetInt64("page")
+	page_size, _ := this.GetInt64("rows")
 	sort := this.GetString("sort")
 	order := this.GetString("order")
 	if len(order) > 0 {
@@ -26,10 +26,10 @@ func (this *UserController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		tree:=this.GetTree()
+		tree := this.GetTree()
 		this.Data["tree"] = &tree
 		this.Data["users"] = &users
-		if this.GetTemplatetype() != "easyui"{
+		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
 		this.TplNames = this.GetTemplatetype() + "/rbac/user.tpl"
@@ -74,7 +74,7 @@ func (this *UserController) UpdateUser() {
 }
 
 func (this *UserController) DelUser() {
-	Id, _ := this.GetInt("Id")
+	Id, _ := this.GetInt64("Id")
 	status, err := m.DelUserById(Id)
 	if err == nil && status > 0 {
 		this.Rsp(true, "Success")
