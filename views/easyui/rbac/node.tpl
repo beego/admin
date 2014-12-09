@@ -85,7 +85,7 @@
         data:grouplist,
         value:1,
         onSelect:function(record){
-            vac.ajax(URL,{group_id:record.Id},"POST",function(data){
+            vac.ajax(URL+"/index",{group_id:record.Id},"POST",function(data){
                         $("#treegrid").treegrid("loadData",data)
                     }
             )
