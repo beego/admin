@@ -4,7 +4,7 @@ Based beego, jquery easyui, bootstrap a background management system
 
 VERSION = "0.1.1"
 
-Get installation
+##Get installation
 
 Execute the following command, you can find beego admin under your GOPATH / src directory
 
