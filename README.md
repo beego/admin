@@ -1,6 +1,6 @@
 ## beego admin
 
-基于beego，jquery easyui ,bootstarp的一个后台管理系统
+基于beego，jquery easyui ,bootstrap的一个后台管理系统
 
 VERSION = "0.1.1"
 
