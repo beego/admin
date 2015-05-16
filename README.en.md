@@ -6,7 +6,7 @@ VERSION = "0.1.1"
 
 ##Get installation
 
-Execute the following command, you can find beego admin under your GOPATH / src directory
+Execute the following command, you can find beego admin under your `GOPATH/src` directory
 
 ```bash
 $ go get github.com/beego/admin
@@ -15,7 +15,7 @@ $ go get github.com/beego/admin
 ##First use
 
 ###Creating Applications
-First, the use of bee tools to create an application, reference http://beego.me/quickstart
+First, the use of bee tools to create an application, reference `http://beego.me/quickstart`
 ```
 $ bee new hello
 ```
