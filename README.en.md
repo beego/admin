@@ -1,6 +1,6 @@
 beego admin
 
-Based beego, jquery easyui, bootstarp a background management system
+Based beego, jquery easyui, bootstrap a background management system
 
 VERSION = "0.1.1"
 
@@ -111,6 +111,6 @@ First start you need to create a database, initialize the database tables.
 ```bash
 $ ./hello -syncdb
 ```
-Well, now you can access through the browser address http: // localhost: 8080 /
+Well, now you can access through the browser address `http://localhost:8080/
 
 The default password is admin username starting
