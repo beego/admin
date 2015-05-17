@@ -37,9 +37,9 @@ func init() {
 ```
 ###Profiles
 
-The database is currently only supports mysql, postgresql, sqlite3, follow-up will add more database support.
+The database is currently only supports MySQL, PostgreSQL, sqlite3, follow-up will add more database support.
 
-Database configuration information required to complete, the program will automatically create database mysql database link information according to the configuration
+Database configuration information required to complete, the program will automatically create database MySQL database link information according to the configuration
 ```
 db_host = localhost
 db_port = 3306
@@ -48,7 +48,7 @@ db_pass = root
 db_name = admin
 db_type = mysql
 ```
-postgresql database link information
+PostgreSQL database link information
 ```
 db_host = localhost
 db_port = 5432
@@ -90,7 +90,7 @@ rbac_auth_gateway = /public/login
 #Default Template
 template_type=easyui
 ```
-The above configuration information need to be added to app.conf file.
+The above configuration information need to be added to `app.conf` file.
 
 ###Copy static files
 
@@ -101,16 +101,17 @@ $ cp -R ../github.com/beego/admin/static ./
 $ cp -R ../github.com/beego/admin/views ./
 
 ```
-### Compile the project
+###Compile the project
 
 After all do. It can be compiled into the hello directory
-
-$ Go build
+```
+$ go build
+```
 First start you need to create a database, initialize the database tables.
 
 ```bash
 $ ./hello -syncdb
 ```
-Well, now you can access through the browser address `http://localhost:8080/
+Well, now you can access through the browser address `http://localhost:8080/`
 
 The default password is admin username starting
