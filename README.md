@@ -102,7 +102,7 @@ $ cp -R ../github.com/beego/admin/views ./
 
 全部做好了以后。就可以编译了,进入hello目录
 ```
-$	go build
+$ go build
 ```
 首次启动需要创建数据库、初始化数据库表。
 ```bash
