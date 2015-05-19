@@ -60,9 +60,6 @@ db_sslmode=disable
 ```
 sqlite3 database link information
 
-db_path = ./
-db_name = admin
-db_type = sqlite3
 ```
 ###db_path refers to the database stored path, the default is the project's root directory
 db_path = ./
