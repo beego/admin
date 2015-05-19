@@ -6,7 +6,7 @@ VERSION = "0.1.1"
 
 ##Get installation
 
-Execute the following command, you can find beego admin under your `GOPATH/src` directory
+Execute the following command, you can find `beego/admin` under your `GOPATH/src` directory
 
 ```bash
 $ go get github.com/beego/admin
@@ -19,12 +19,12 @@ First, the use of bee tools to create an application, reference `http://beego.me
 ```
 $ bee new hello
 ```
-After successfully created, you can get a man named hello application, now you can use it. Just find the new program `hello/routers/router.go` this document
+After successfully created, you can get a man named `hello` application, now you can use it. Just find the new program `hello/routers/router.go` this document
 ```go
 import (
-	"hello/controllers" 		//自身业务包
-	"github.com/astaxie/beego"  //beego 包
-	"github.com/beego/admin"  //admin 包
+	"hello/controllers" 		// self-service package
+	"github.com/astaxie/beego"  // beego package
+	"github.com/beego/admin"  // admin package
 )
 
 ```
