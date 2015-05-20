@@ -37,10 +37,10 @@ func init() {
 ```
 ###配置文件
 
-数据库目前仅支持mysql,postgresql,sqlite3,后续会添加更多的数据库支持。
+数据库目前仅支持MySQL,PostgreSQL,sqlite3,后续会添加更多的数据库支持。
 
 数据库的配置信息需要填写，程序会根据配置自动建库
-mysql数据库链接信息
+MySQL数据库链接信息
 ```
 db_host = localhost
 db_port = 3306
