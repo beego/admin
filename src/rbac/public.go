@@ -31,7 +31,7 @@ func (this *MainController) Index() {
 	if userinfo == nil {
 		this.Ctx.Redirect(302, beego.AppConfig.String("rbac_auth_gateway"))
 	}
-	tree:=this.GetTree()
+	tree:=this.GetTree(userinfo)
 	if this.IsAjax() {
 		this.Data["json"] = &tree
 		this.ServeJson()

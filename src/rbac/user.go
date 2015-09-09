@@ -26,8 +26,8 @@ func (this *UserController) Index() {
 		this.ServeJson()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
+//		tree := this.GetTree()
+//		this.Data["tree"] = &tree
 		this.Data["users"] = &users
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
