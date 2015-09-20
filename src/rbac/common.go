@@ -32,7 +32,6 @@ func (this *CommonController) GetTree(userinfo interface{}) []Tree {
 	if nil == userinfo {
 		return tree
 	}
-//	userinfo := this.GetSession("userinfo")
 	fmt.Println("******* userinfo:", userinfo)
 	accesslist, _ := GetAccessRightList(userinfo.(m.User).Id)
 	fmt.Println("******* accesslist:", accesslist)
