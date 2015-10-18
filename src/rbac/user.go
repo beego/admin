@@ -1,7 +1,7 @@
 package rbac
 
 import (
-	m "github.com/beego/admin/src/models"
+	m "admin/src/models"
 )
 
 type UserController struct {

@@ -2,8 +2,8 @@ package rbac
 
 import (
 	"github.com/astaxie/beego"
-	. "github.com/beego/admin/src"
-	m "github.com/beego/admin/src/models"
+	. "admin/src"
+	m "admin/src/models"
 	"fmt"
 	"strings"
 )
@@ -46,7 +46,7 @@ func (this *CommonController) GetTree(userinfo interface{}) []Tree {
 		children, _ := m.GetNodeTree(v["Id"].(int64), 2)
 		tree[k].Children = []Tree{}
 		for _, v1 := range children {
-			url := "/" + v["Name"].(string) + "/" + v1["Name"].(string)
+			url := v["Name"].(string) + "/" + v1["Name"].(string)
 			if !isAdminUser {
 				if r := hasAccessRight(accesslist, url); !r {
 					continue
@@ -55,7 +55,7 @@ func (this *CommonController) GetTree(userinfo interface{}) []Tree {
 			node := Tree{}
 			node.Id = v1["Id"].(int64)
 			node.Text = v1["Title"].(string)
-			node.Attributes.Url = url
+			node.Attributes.Url = "/" + url
 			tree[k].Children = append(tree[k].Children, node)
 		}
 	}
@@ -140,7 +140,7 @@ func hasAccessRight(accesslist interface{}, url string) bool {
 //To test whether permissions
 func AccessRightDecision(params []string, accesslist map[string]bool) bool {
 	if CheckAccessRight(params) {
-		s := fmt.Sprintf("%s/%s/%s", params[1], params[2], params[3])
+		s := fmt.Sprintf("%s/%s/%s", params[0], params[1], params[2])
 		if len(accesslist) < 1 {
 			return false
 		}

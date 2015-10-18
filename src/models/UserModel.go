@@ -8,7 +8,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
-	. "github.com/beego/admin/src/lib"
+	. "admin/src/lib"
 )
 
 //用户表

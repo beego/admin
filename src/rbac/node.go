@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego/orm"
-	m "github.com/beego/admin/src/models"
+	m "admin/src/models"
 )
 
 type NodeController struct {
