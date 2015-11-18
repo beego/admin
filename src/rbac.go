@@ -43,7 +43,7 @@ func AccessRegister() {
 
 				ret := AccessDecision(params, accesslist)
 				if !ret {
-					ctx.Output.Json(&map[string]interface{}{"status": false, "info": "权限不足"}, true, false)
+					ctx.Output.JSON(&map[string]interface{}{"status": false, "info": "权限不足"}, true, false)
 				}
 			}
 

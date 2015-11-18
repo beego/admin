@@ -52,14 +52,14 @@ func Connect() {
 	db_sslmode := beego.AppConfig.String("db_sslmode")
 	switch db_type {
 	case "mysql":
-		orm.RegisterDriver("mysql", orm.DR_MySQL)
+		orm.RegisterDriver("mysql", orm.DRMySQL)
 		dns = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", db_user, db_pass, db_host, db_port, db_name)
 		break
 	case "postgres":
-		orm.RegisterDriver("postgres", orm.DR_Postgres)
+		orm.RegisterDriver("postgres", orm.DRPostgres)
 		dns = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_name, db_host, db_user, db_pass, db_port, db_sslmode)
 	case "sqlite3":
-		orm.RegisterDriver("sqlite3", orm.DR_Sqlite)
+		orm.RegisterDriver("sqlite3", orm.DRSqlite)
 		if db_path == "" {
 			db_path = "./"
 		}

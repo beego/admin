@@ -23,7 +23,7 @@ func (this *UserController) Index() {
 	users, count := m.Getuserlist(page, page_size, sort)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		tree := this.GetTree()
