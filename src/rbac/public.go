@@ -31,17 +31,17 @@ func (this *MainController) Index() {
 	if userinfo == nil {
 		this.Ctx.Redirect(302, beego.AppConfig.String("rbac_auth_gateway"))
 	}
-	tree:=this.GetTree()
+	tree := this.GetTree()
 	if this.IsAjax() {
 		this.Data["json"] = &tree
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
 		this.Data["groups"] = groups
 		this.Data["tree"] = &tree
-		if this.GetTemplatetype() != "easyui"{
+		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
 		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
