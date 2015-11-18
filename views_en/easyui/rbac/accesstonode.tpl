@@ -95,7 +95,7 @@ $(function(){
 <div id="tbr" style="padding:5px;height:auto">
     <div style="margin-bottom:5px">
         Group: <input id="group" name="name" >
-        Current Group: <input id="combobox1" name="name" >
+        Current Role: <input id="combobox1" name="name" >
         <a href="#"  class="easyui-linkbutton" iconCls="icon-save" title="保存" plain="true" onclick="saveaccess()">Save</a>
     </div>
 </div>
