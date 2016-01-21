@@ -31,10 +31,10 @@ func (this *RoleController) Index() {
 			roles = []orm.Params{}
 		}
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &roles}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
-		this.TplNames = this.GetTemplatetype() + "/rbac/role.tpl"
+		this.TplName = this.GetTemplatetype() + "/rbac/role.tpl"
 	}
 
 }
@@ -81,7 +81,7 @@ func (this *RoleController) Getlist() {
 		roles = []orm.Params{}
 	}
 	this.Data["json"] = &roles
-	this.ServeJson()
+	this.ServeJSON()
 	return
 }
 
@@ -107,14 +107,14 @@ func (this *RoleController) AccessToNode() {
 			nodes = []orm.Params{}
 		}
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &nodes}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		grouplist := m.GroupList()
 		b, _ := json.Marshal(grouplist)
 		this.Data["grouplist"] = string(b)
 		this.Data["roleid"] = roleid
-		this.TplNames = this.GetTemplatetype() + "/rbac/accesstonode.tpl"
+		this.TplName = this.GetTemplatetype() + "/rbac/accesstonode.tpl"
 	}
 
 }
@@ -155,11 +155,11 @@ func (this *RoleController) RoleToUserList() {
 			users = []orm.Params{}
 		}
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		this.Data["roleid"] = roleid
-		this.TplNames = this.GetTemplatetype() + "/rbac/roletouserlist.tpl"
+		this.TplName = this.GetTemplatetype() + "/rbac/roletouserlist.tpl"
 	}
 }
 

@@ -34,7 +34,7 @@ func (this *MainController) Index() {
 	tree:=this.GetTree()
 	if this.IsAjax() {
 		this.Data["json"] = &tree
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		groups := m.GroupList()
@@ -44,7 +44,7 @@ func (this *MainController) Index() {
 		if this.GetTemplatetype() != "easyui"{
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
+		this.TplName = this.GetTemplatetype() + "/public/index.tpl"
 	}
 }
 
@@ -71,7 +71,7 @@ func (this *MainController) Login() {
 	if userinfo != nil {
 		this.Ctx.Redirect(302, "/public/index")
 	}
-	this.TplNames = this.GetTemplatetype() + "/public/login.tpl"
+	this.TplName = this.GetTemplatetype() + "/public/login.tpl"
 }
 
 //退出

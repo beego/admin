@@ -23,7 +23,7 @@ func (this *UserController) Index() {
 	users, count := m.Getuserlist(page, page_size, sort)
 	if this.IsAjax() {
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		tree := this.GetTree()
@@ -32,7 +32,7 @@ func (this *UserController) Index() {
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/rbac/user.tpl"
+		this.TplName = this.GetTemplatetype() + "/rbac/user.tpl"
 	}
 
 }
