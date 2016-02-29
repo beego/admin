@@ -24,10 +24,6 @@ type User struct {
 	Lastlogintime time.Time `orm:"null;type(datetime)" form:"-"`
 	Createtime    time.Time `orm:"type(datetime);auto_now_add" `
 	Role          []*Role   `orm:"rel(m2m)"`
-	Memberid      int
-	OrgId         int
-	BaseCityId    int
-	DisplayName   string
 }
 
 func (u *User) TableName() string {
