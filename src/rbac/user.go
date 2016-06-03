@@ -1,7 +1,7 @@
 package rbac
 
 import (
-	m "github.com/beego/admin/src/models"
+	m "admin/src/models"
 )
 
 type UserController struct {
@@ -26,8 +26,8 @@ func (this *UserController) Index() {
 		this.ServeJSON()
 		return
 	} else {
-		tree := this.GetTree()
-		this.Data["tree"] = &tree
+		//		tree := this.GetTree()
+		//		this.Data["tree"] = &tree
 		this.Data["users"] = &users
 		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"

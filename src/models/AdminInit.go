@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
+	. "admin/src/lib"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	. "github.com/beego/admin/src/lib"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"

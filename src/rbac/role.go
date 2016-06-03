@@ -5,8 +5,9 @@ import (
 	"strconv"
 	"strings"
 
+	m "admin/src/models"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	m "github.com/beego/admin/src/models"
 )
 
 type RoleController struct {
@@ -97,6 +98,7 @@ func (this *RoleController) AccessToNode() {
 			} else {
 				nodes[i]["state"] = "closed"
 			}
+			nodes[i]["checked"] = 0
 			for x := 0; x < len(list); x++ {
 				if nodes[i]["Id"] == list[x]["Id"] {
 					nodes[i]["checked"] = 1
@@ -125,8 +127,13 @@ func (this *RoleController) AddAccess() {
 	err := m.DelGroupNode(roleid, group_id)
 	if err != nil {
 		this.Rsp(false, err.Error())
+		return
 	}
 	ids := this.GetString("ids")
+	if len(ids) == 0 {
+		this.Rsp(true, "success")
+		return
+	}
 	nodeids := strings.Split(ids, ",")
 	for _, v := range nodeids {
 		id, _ := strconv.Atoi(v)
@@ -140,6 +147,7 @@ func (this *RoleController) AddAccess() {
 }
 
 func (this *RoleController) RoleToUserList() {
+	beego.Info("******** role id:", this.GetString("Id"), "********")
 	roleid, _ := this.GetInt64("Id")
 	if this.IsAjax() {
 		users, count := m.Getuserlist(1, 1000, "Id")

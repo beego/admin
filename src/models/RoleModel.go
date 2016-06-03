@@ -131,6 +131,7 @@ func DelGroupNode(roleid int64, groupid int64) error {
 	}
 	return nil
 }
+
 func AddRoleNode(roleid int64, nodeid int64) (int64, error) {
 	o := orm.NewOrm()
 	role := Role{Id: roleid}

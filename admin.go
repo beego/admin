@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/astaxie/beego"
-	. "github.com/beego/admin/src/lib"
-	"github.com/beego/admin/src/models"
+	. "admin/src/lib"
+	"admin/src/models"
 )
 
 const VERSION = "0.1.1"
