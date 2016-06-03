@@ -1,10 +1,10 @@
 package rbac
 
 import (
-	"github.com/astaxie/beego"
 	. "admin/src"
 	m "admin/src/models"
 	"fmt"
+	"github.com/astaxie/beego"
 	"strings"
 )
 
@@ -15,7 +15,7 @@ type CommonController struct {
 
 func (this *CommonController) Rsp(status bool, str string) {
 	this.Data["json"] = &map[string]interface{}{"status": status, "info": str}
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 func (this *CommonController) GetTemplatetype() string {
@@ -26,7 +26,7 @@ func (this *CommonController) GetTemplatetype() string {
 	return templatetype
 }
 
-func (this *CommonController) GetTree(userinfo interface{}) []Tree {	
+func (this *CommonController) GetTree(userinfo interface{}) []Tree {
 	nodes, _ := m.GetNodeTree(0, 1)
 	tree := make([]Tree, len(nodes))
 	if nil == userinfo {
@@ -66,14 +66,15 @@ func (this *CommonController) GetTree(userinfo interface{}) []Tree {
 				break
 			} else {
 				tree = append(tree[:i], tree[i+1:]...)
-				i--	
+				i--
 			}
-			
+
 		}
 	}
-	
+
 	return tree
 }
+
 //Access permissions list
 func GetAccessRightList(uid int64) (map[string]bool, error) {
 	list, err := m.AccessList(uid)
@@ -170,5 +171,5 @@ func CheckAccessRight(params []string) bool {
 func init() {
 
 	//验证权限
-//	AccessRegister()
+	//	AccessRegister()
 }

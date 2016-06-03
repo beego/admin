@@ -2,9 +2,9 @@ package rbac
 
 import (
 	//"fmt"
-	"github.com/astaxie/beego"
 	. "admin/src"
 	m "admin/src/models"
+	"github.com/astaxie/beego"
 )
 
 type MainController struct {
@@ -31,20 +31,20 @@ func (this *MainController) Index() {
 	if userinfo == nil {
 		this.Ctx.Redirect(302, beego.AppConfig.String("rbac_auth_gateway"))
 	}
-	tree:=this.GetTree(userinfo)
+	tree := this.GetTree(userinfo)
 	if this.IsAjax() {
 		this.Data["json"] = &tree
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		groups := m.GroupList()
 		this.Data["userinfo"] = userinfo
 		this.Data["groups"] = groups
 		this.Data["tree"] = &tree
-		if this.GetTemplatetype() != "easyui"{
+		if this.GetTemplatetype() != "easyui" {
 			this.Layout = this.GetTemplatetype() + "/public/layout.tpl"
 		}
-		this.TplNames = this.GetTemplatetype() + "/public/index.tpl"
+		this.TplName = this.GetTemplatetype() + "/public/index.tpl"
 	}
 }
 
@@ -71,7 +71,7 @@ func (this *MainController) Login() {
 	if userinfo != nil {
 		this.Ctx.Redirect(302, "/public/index")
 	}
-	this.TplNames = this.GetTemplatetype() + "/public/login.tpl"
+	this.TplName = this.GetTemplatetype() + "/public/login.tpl"
 }
 
 //退出

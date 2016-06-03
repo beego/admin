@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	. "admin/src/lib"
 	m "admin/src/models"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 )
 
 //check access and register user's nodes
@@ -43,7 +43,7 @@ func AccessRegister() {
 
 				ret := AccessDecision(params, accesslist)
 				if !ret {
-					ctx.Output.Json(&map[string]interface{}{"status": false, "info": "权限不足"}, true, false)
+					ctx.Output.JSON(&map[string]interface{}{"status": false, "info": "权限不足"}, true, false)
 				}
 			}
 

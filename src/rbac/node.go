@@ -3,8 +3,8 @@ package rbac
 import (
 	"encoding/json"
 
-	"github.com/astaxie/beego/orm"
 	m "admin/src/models"
+	"github.com/astaxie/beego/orm"
 )
 
 type NodeController struct {
@@ -13,7 +13,7 @@ type NodeController struct {
 
 func (this *NodeController) Rsp(status bool, str string) {
 	this.Data["json"] = &map[string]interface{}{"status": status, "info": str}
-	this.ServeJson()
+	this.ServeJSON()
 }
 
 func (this *NodeController) Index() {
@@ -41,13 +41,13 @@ func (this *NodeController) Index() {
 			nodes = []orm.Params{}
 		}
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &nodes}
-		this.ServeJson()
+		this.ServeJSON()
 		return
 	} else {
 		grouplist := m.GroupList()
 		b, _ := json.Marshal(grouplist)
 		this.Data["grouplist"] = string(b)
-		this.TplNames = this.GetTemplatetype() + "/rbac/node.tpl"
+		this.TplName = this.GetTemplatetype() + "/rbac/node.tpl"
 	}
 
 }
