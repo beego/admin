@@ -24,6 +24,7 @@ func AccessRegister() {
 				uinfo := ctx.Input.Session("userinfo")
 				if uinfo == nil {
 					ctx.Redirect(302, rbac_auth_gateway)
+                    return
 				}
 				//admin用户不用认证权限
 				adminuser := beego.AppConfig.String("rbac_admin_user")
