@@ -134,3 +134,11 @@ func GetUserByUsername(username string) (user User) {
 	o.Read(&user, "Username")
 	return user
 }
+
+func GetUserById(id int64) (user User) {
+	user = User{Id: id}
+	o := orm.NewOrm()
+	o.Read(&user, "Id")
+	return user
+}
+
