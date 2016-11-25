@@ -19,7 +19,7 @@ func AccessRegister() {
 		rbac_auth_gateway := beego.AppConfig.String("rbac_auth_gateway")
 		var accesslist map[string]bool
 		if user_auth_type > 0 {
-			params := strings.Split(strings.ToLower(ctx.Request.RequestURI), "/")
+			params := strings.Split(strings.ToLower(strings.Split(ctx.Request.RequestURI, "?")[0]), "/")
 			if CheckAccess(params) {
 				uinfo := ctx.Input.Session("userinfo")
 				if uinfo == nil {
