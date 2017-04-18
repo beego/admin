@@ -11,9 +11,9 @@ VERSION = "0.1.1"
 $ go get github.com/beego/admin
 ```
 
-##初次使用
+## 初次使用
 
-###创建应用
+### 创建应用
 首先,使用bee工具创建一个应用程序，参考[`http://beego.me/quickstart`](beego的入门)
 ```
 $ bee new hello
@@ -35,7 +35,7 @@ func init() {
 	beego.Router("/", &controllers.MainController{})
 }
 ```
-###配置文件
+### 配置文件
 
 数据库目前仅支持MySQL,PostgreSQL,sqlite3,后续会添加更多的数据库支持。
 
@@ -89,7 +89,7 @@ template_type=easyui
 ```
 以上配置信息都需要加入到app.conf文件中。
 
-###复制静态文件
+### 复制静态文件
 
 最后还需要把js，css，image，tpl这些文件复制过来。
 ```bash
@@ -98,7 +98,7 @@ $ cp -R ../github.com/beego/admin/static ./
 $ cp -R ../github.com/beego/admin/views ./
 
 ```
-###编译项目
+### 编译项目
 
 全部做好了以后。就可以编译了,进入hello目录
 ```

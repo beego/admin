@@ -4,7 +4,7 @@ Based beego, jQuery EasyUI, bootstrap a background management system
 
 VERSION = "0.1.1"
 
-##Get installation
+## Get installation
 
 Execute the following command, you can find `beego/admin` under your `GOPATH/src` directory
 
@@ -12,9 +12,9 @@ Execute the following command, you can find `beego/admin` under your `GOPATH/src
 $ go get github.com/beego/admin
 ```
 
-##First use
+## First use
 
-###Creating Applications
+### Creating Applications
 First, the use of bee tools to create an application, reference `http://beego.me/quickstart`
 ```
 $ bee new hello
@@ -28,14 +28,14 @@ import (
 )
 
 ```
-##Introducing admin code, and then use it in `init` function
+## Introducing admin code, and then use it in `init` function
 ```go
 func init() {
 	admin.Run()
 	beego.Router("/", &controllers.MainController{})
 }
 ```
-###Profiles
+### Profiles
 
 The database is currently only supports MySQL, PostgreSQL, sqlite3, follow-up will add more database support.
 
@@ -89,7 +89,7 @@ template_type=easyui
 ```
 The above configuration information need to be added to `app.conf` file.
 
-###Copy static files
+### Copy static files
 
 Finally also we need to js, ​​css, image, tpl these files are copied over.
 ```bash
@@ -98,7 +98,7 @@ $ cp -R ../github.com/beego/admin/static ./
 $ cp -R ../github.com/beego/admin/views ./
 
 ```
-###Compile the project
+### Compile the project
 
 After all do. It can be compiled into the hello directory
 ```
