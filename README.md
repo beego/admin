@@ -87,7 +87,7 @@ rbac_auth_gateway = /public/login
 #默认模版
 template_type=easyui
 ```
-以上配置信息都需要加入到app.conf文件中。
+以上配置信息都需要加入到hello/conf/app.conf文件中, 可以参考admin/conf/app.conf的配置。
 
 ### 复制静态文件
 
