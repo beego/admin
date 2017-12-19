@@ -1,7 +1,6 @@
 package rbac
 
 import (
-	"github.com/astaxie/beego"
 	m "github.com/beego/admin/src/models"
 )
 
@@ -29,8 +28,6 @@ func (this *UserController) Index() {
 	if len(Nickname__contains) > 0 {
 		searchMap["Nickname__contains"] = Nickname__contains
 	}
-
-	beego.Warning(searchMap)
 	if len(order) > 0 {
 		if order == "desc" {
 			sort = "-" + sort
