@@ -56,10 +56,14 @@ func init() {
 /************************************************************/
 
 //get user list
-func Getuserlist(page int64, page_size int64, sort string) (users []orm.Params, count int64) {
+func Getuserlist(page int64, page_size int64, sort string, searchMap map[string]string) (users []orm.Params, count int64) {
 	o := orm.NewOrm()
 	user := new(User)
 	qs := o.QueryTable(user)
+	// 实现搜索过滤
+	for k, v := range searchMap {
+		qs = qs.Filter(k, v)
+	}
 	var offset int64
 	if page <= 1 {
 		offset = 0
@@ -141,4 +145,3 @@ func GetUserById(id int64) (user User) {
 	o.Read(&user, "Id")
 	return user
 }
-

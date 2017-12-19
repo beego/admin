@@ -1,6 +1,7 @@
 package rbac
 
 import (
+	"github.com/astaxie/beego"
 	m "github.com/beego/admin/src/models"
 )
 
@@ -13,6 +14,23 @@ func (this *UserController) Index() {
 	page_size, _ := this.GetInt64("rows")
 	sort := this.GetString("sort")
 	order := this.GetString("order")
+	// 获取搜索条件
+	Username__exact := this.GetString("Username__exact")
+	Nickname__contains := this.GetString("Nickname__contains")
+
+	// 先声明map
+	var searchMap map[string]string
+	// 再使用make函数创建一个非nil的map，nil map不能赋值
+	searchMap = make(map[string]string)
+	// 最后给已声明的map赋值
+	if len(Username__exact) > 0 {
+		searchMap["Username__exact"] = Username__exact
+	}
+	if len(Nickname__contains) > 0 {
+		searchMap["Nickname__contains"] = Nickname__contains
+	}
+
+	beego.Warning(searchMap)
 	if len(order) > 0 {
 		if order == "desc" {
 			sort = "-" + sort
@@ -20,8 +38,9 @@ func (this *UserController) Index() {
 	} else {
 		sort = "Id"
 	}
-	users, count := m.Getuserlist(page, page_size, sort)
+	users, count := m.Getuserlist(page, page_size, sort, searchMap)
 	if this.IsAjax() {
+
 		this.Data["json"] = &map[string]interface{}{"total": count, "rows": &users}
 		this.ServeJSON()
 		return

@@ -142,7 +142,11 @@ func (this *RoleController) AddAccess() {
 func (this *RoleController) RoleToUserList() {
 	roleid, _ := this.GetInt64("Id")
 	if this.IsAjax() {
-		users, count := m.Getuserlist(1, 1000, "Id")
+		// 先声明map
+		var searchMap map[string]string
+		// 再使用make函数创建一个非nil的map，nil map不能赋值
+		searchMap = make(map[string]string)
+		users, count := m.Getuserlist(1, 1000, "Id", searchMap)
 		list, _ := m.GetUserByRoleId(roleid)
 		for i := 0; i < len(users); i++ {
 			for x := 0; x < len(list); x++ {
