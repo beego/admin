@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-//create md5 string
+// Strtomd5: create md5 string
 func Strtomd5(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))
@@ -14,7 +14,7 @@ func Strtomd5(s string) string {
 	return rs
 }
 
-//password hash function
+// Pwdhash: password hash function
 func Pwdhash(str string) string {
 	return Strtomd5(str)
 }

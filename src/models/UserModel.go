@@ -55,7 +55,7 @@ func init() {
 
 /************************************************************/
 
-//get user list
+// Getuserlist gets user list
 func Getuserlist(page int64, page_size int64, sort string) (users []orm.Params, count int64) {
 	o := orm.NewOrm()
 	user := new(User)

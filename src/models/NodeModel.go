@@ -43,7 +43,7 @@ func init() {
 	orm.RegisterModel(new(Node))
 }
 
-//get node list
+// GetNodelist gets node list
 func GetNodelist(page int64, page_size int64, sort string) (nodes []orm.Params, count int64) {
 	o := orm.NewOrm()
 	node := new(Node)

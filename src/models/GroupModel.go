@@ -39,7 +39,7 @@ func checkGroup(g *Group) (err error) {
 	return nil
 }
 
-//get group list
+// GetGrouplist gets group list
 func GetGrouplist(page int64, page_size int64, sort string) (groups []orm.Params, count int64) {
 	o := orm.NewOrm()
 	group := new(Group)

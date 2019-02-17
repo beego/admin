@@ -40,7 +40,7 @@ func checkRole(g *Role) (err error) {
 	return nil
 }
 
-//get role list
+// GetRolelist gets role list
 func GetRolelist(page int64, page_size int64, sort string) (roles []orm.Params, count int64) {
 	o := orm.NewOrm()
 	role := new(Role)
