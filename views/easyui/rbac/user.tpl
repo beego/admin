@@ -180,6 +180,7 @@ function reloadrow(){
     $("#datagrid").datagrid("reload");
 }
 
+
 //添加用户弹窗
 function addrow(){
     $("#dialog").dialog('open');
@@ -217,6 +218,17 @@ function delrow(){
         }
     });
 }
+
+// 搜索
+function searchForm() {
+    // form表单数据转为json
+var data = $("#searchform").serializeArray();
+            vac.ajax(URL+"/index",data,"POST",function(data){
+                console.log(data)
+                        $("#datagrid").datagrid("loadData",data)
+                    }
+            )
+}
 </script>
 <body>
 <table id="datagrid" toolbar="#tb"></table>
@@ -227,7 +239,20 @@ function delrow(){
     <a href="#" icon='icon-cancel' plain="true" onclick="delrow()" class="easyui-linkbutton" >删除</a>
     <a href="#" icon='icon-reload' plain="true" onclick="reloadrow()" class="easyui-linkbutton" >刷新</a>
     <a href="#" icon='icon-edit' plain="true" onclick="updateuserpassword()" class="easyui-linkbutton" >修改用户密码</a>
+
+    <div  style="float:right;height:auto">
+    <form id="searchform">
+    用户名：<input name="Username__exact" value= ""/>
+    昵称；<input name = "Nickname__contains" value=""/>
+
+     <a href="#" icon='icon-search' plain="true" onclick="searchForm()" class="easyui-linkbutton" >搜索</a>
+     </form>
+
+   
+  
 </div>
+</div>
+
 <!--表格内的右键菜单-->
 <div id="mm" class="easyui-menu" style="width:120px;display: none" >
     <div iconCls='icon-add' onclick="addrow()">新增</div>

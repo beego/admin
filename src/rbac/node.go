@@ -18,18 +18,8 @@ func (this *NodeController) Rsp(status bool, str string) {
 
 func (this *NodeController) Index() {
 	if this.IsAjax() {
-		page, _ := this.GetInt64("page")
-		page_size, _ := this.GetInt64("rows")
-		sort := this.GetString("sort")
-		order := this.GetString("order")
-		if len(order) > 0 {
-			if order == "desc" {
-				sort = "-" + sort
-			}
-		} else {
-			sort = "Id"
-		}
-		nodes, count := m.GetNodelist(page, page_size, sort)
+		groupid, _ := this.GetInt64("group_id")
+		nodes, count := m.GetNodelistByGroupid(groupid)
 		for i := 0; i < len(nodes); i++ {
 			if nodes[i]["Pid"] != 0 {
 				nodes[i]["_parentId"] = nodes[i]["Pid"]

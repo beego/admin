@@ -8,7 +8,8 @@
     var URL="/rbac/node";
     $(function(){
         $("#treegrid").treegrid({
-            url:URL+"/index",
+            
+            url:URL+"/index?group_id=1",
             idField:"Id",
             treeField:"Title",
             fitColumns:"true",
@@ -16,7 +17,7 @@
                 {field:'Title',title:'显示名',width:150,editor:'text'},
                 {field:'Id',title:'ID',width:50},
                 {field:'Name',title:'应用名',width:100,editor:'text'},
-                {field:'Group__Id',title:'分组',width:80,
+                {field:'Group',title:'分组',width:80,
                     formatter:function(value){
                         for(var i=0; i<grouplist.length; i++){
                             if (grouplist[i].Id == value) return grouplist[i].Title;
