@@ -14,12 +14,12 @@ $ go get github.com/beego/admin
 ## 初次使用
 
 ### 创建应用
-首先,使用bee工具创建一个应用程序，参考[`http://beego.me/quickstart`](beego的入门)
+首先，使用bee工具创建一个应用程序，参考[`https://beego.me/quickstart`](beego的入门)
 ```
 $ bee new hello
 ```
 创建成功以后，你能得到一个名叫hello的应用程序，
-现在开始可以使用它了。找到到刚刚新建的程序`hello/routers/router.go`这个文件
+现在可以开始使用它了。找到到刚刚新建的程序`hello/routers/router.go`这个文件
 ```go
 import (
 	"hello/controllers" 		//自身业务包
@@ -28,7 +28,7 @@ import (
 )
 
 ```
-引入admin代码，再`init`函数中使用它
+引入admin代码，在`init`函数中使用它
 ```go
 func init() {
 	admin.Run()
@@ -39,7 +39,7 @@ func init() {
 
 数据库目前仅支持MySQL,PostgreSQL,sqlite3,后续会添加更多的数据库支持。
 
-数据库的配置信息需要填写，程序会根据配置自动建库
+数据库的配置信息需要填写，程序会根据配置自动建库。
 MySQL数据库链接信息
 ```
 db_host = localhost
@@ -100,7 +100,7 @@ $ cp -R ../github.com/beego/admin/views ./
 ```
 ### 编译项目
 
-全部做好了以后。就可以编译了,进入hello目录
+全部做好了以后，就可以编译了。进入hello目录
 ```
 $ go build
 ```
@@ -110,5 +110,5 @@ $ ./hello -syncdb
 ```
 好了，现在可以通过浏览器地址访问了[`http://localhost:8080/`](http://localhost:8080/)
 
-默认得用户名密码都是admin
+默认的用户名密码都是admin。
 
